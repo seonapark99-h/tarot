@@ -1478,7 +1478,7 @@ async function getReading(){
   const msgs=['마음의 거울을 들여다보는 중...','우주의 신호를 해독하는 중...','두 사람의 실타래를 엮는 중...','당신의 우연을 운명으로 바꾸는 중...','별자리가 정렬되고 있습니다...','연의 타로가 답을 전달합니다...'];
   let mi=0;const li=setInterval(()=>{mi=(mi+1)%msgs.length;document.getElementById('load-msg').textContent=msgs[mi];},1500);
   try{
-    const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:6000,system:'당신은 연애 타로 리더입니다. 항상 올바른 JSON 형식으로만 응답하세요. 마크다운, 코드블록, 추가 텍스트 없이 JSON 객체만 출력하세요.',messages:[{role:'user',content:buildPrompt()}]})});
+    const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:6000,system:'당신은 연애 타로 리더입니다. 항상 올바른 JSON 형식으로만 응답하세요. 마크다운, 코드블록, 추가 텍스트 없이 JSON 객체만 출력하세요.',messages:[{role:'user',content:buildPrompt()}]})});
     clearInterval(li);
     if(!res.ok){console.error('API Error:',res.status);renderFallback();return;}
     const data=await res.json();
