@@ -8,7 +8,9 @@ export default async function handler(req, res) {
   }
 
   if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
+    return res.status(405).json({
+      error: "Method not allowed"
+    });
   }
 
   const apiKey = process.env.GEMINI_API_KEY;
@@ -25,10 +27,14 @@ export default async function handler(req, res) {
     const userText =
       body.messages
         ?.map((m) => {
-          if (typeof m.content === "string") return m.content;
+          if (typeof m.content === "string") {
+            return m.content;
+          }
 
           if (Array.isArray(m.content)) {
-            return m.content.map((c) => c.text || "").join("\n");
+            return m.content
+              .map((c) => c.text || "")
+              .join("\n");
           }
 
           return "";
@@ -49,14 +55,18 @@ export default async function handler(req, res) {
     }
 
     const models = [
+      "gemini-2.5-flash-lite",
       "gemini-2.0-flash",
+      "gemini-1.5-flash-8b",
       "gemini-1.5-flash"
     ];
+
+    const maxOutputTokens = Math.min(body.max_tokens || 2000, 2000);
 
     let lastError = null;
 
     for (const model of models) {
-      for (let attempt = 1; attempt <= 3; attempt++) {
+      for (let attempt = 1; attempt <= 2; attempt++) {
         const response = await fetch(
           `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
           {
@@ -77,7 +87,7 @@ export default async function handler(req, res) {
                 }
               ],
               generationConfig: {
-                maxOutputTokens: Math.min(body.max_tokens || 2000, 2000),
+                maxOutputTokens,
                 temperature: 0.7
               }
             })
@@ -99,7 +109,8 @@ export default async function handler(req, res) {
                 text
               }
             ],
-            raw: data
+            raw: data,
+            usedModel: model
           });
         }
 
@@ -110,19 +121,21 @@ export default async function handler(req, res) {
           detail: data
         };
 
-        if (response.status !== 503) {
+        if (response.status !== 503 && response.status !== 429) {
           return res.status(response.status).json({
             error: "Gemini API Error",
             ...lastError
           });
         }
 
-        await new Promise((resolve) => setTimeout(resolve, attempt * 800));
+        await new Promise((resolve) =>
+          setTimeout(resolve, attempt * 1000)
+        );
       }
     }
 
     return res.status(503).json({
-      error: "Gemini API overloaded after retries",
+      error: "All Gemini models failed after retries",
       detail: lastError
     });
   } catch (e) {
