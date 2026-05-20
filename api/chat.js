@@ -18,12 +18,6 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { message } = req.body;
-
-    if (!message) {
-      return res.status(400).json({ error: "Message is required" });
-    }
-
     const response = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
       headers: {
@@ -31,30 +25,12 @@ export default async function handler(req, res) {
         "x-api-key": apiKey,
         "anthropic-version": "2023-06-01",
       },
-      body: JSON.stringify({
-        model: "claude-3-5-sonnet-20241022",
-        max_tokens: 1000,
-        messages: [
-          {
-            role: "user",
-            content: message,
-          },
-        ],
-      }),
+      body: JSON.stringify(req.body),
     });
 
     const data = await response.json();
 
-    if (!response.ok) {
-      return res.status(response.status).json({
-        error: data.error || data,
-      });
-    }
-
-    return res.status(200).json({
-      text: data.content?.[0]?.text || "",
-      raw: data,
-    });
+    return res.status(response.status).json(data);
   } catch (e) {
     return res.status(500).json({ error: e.message });
   }
