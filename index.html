@@ -1019,7 +1019,6 @@ strong.cn{color:rgba(201,169,110,.78);font-weight:400;}
 .gacha-overlay:not(.active) .gacha-fx-aura,
 .gacha-overlay:not(.active) .gacha-fx-star{display:none!important;}
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
 <canvas id="bg"></canvas>
@@ -2552,7 +2551,7 @@ function hl(t){
   return r;
 }
 
-function renderResult(p){
+function renderResult(p){lastParsed=p;
   document.getElementById('ai-load').style.display='none';
   // 결과 나오면 카드 헤더 다시 표시
   const fxBar2=document.getElementById('res-fixed-bar');
@@ -2677,6 +2676,7 @@ function renderResult(p){
 
 // ── 추가 질문 채팅 ──
 let chatCount=0;
+let lastParsed=null;
 let chatContext={};
 const CHAT_MAX=3;
 
@@ -2760,29 +2760,127 @@ async function sendChat(){
 
 // ── 공유하기 ──
 async function shareReading(){
-  const title='연의 타로 — 나의 리딩 결과';
-  const text=`✦ ${selQ?selQ.text:''}
+  const btn=document.querySelector('.share-btn');
+  if(!btn) return;
+  const orig=btn.innerHTML;
+  btn.innerHTML='<span>⏳</span><span>이미지 생성 중...</span>';
+  btn.disabled=true;
 
-연의 타로에서 오늘의 리딩을 받았어요.
-yeon-tarot.vercel.app`;
-  const url=window.location.href;
+  try{
+    const W=750, PAD=44;
+    const p=lastParsed||{};
 
-  if(navigator.share){
-    try{
-      await navigator.share({title,text,url});
-    } catch(e){}
-  } else {
-    // 클립보드 복사 fallback
-    try{
-      await navigator.clipboard.writeText(text+'\n'+url);
-      const btn=document.querySelector('.share-btn');
-      const orig=btn.innerHTML;
-      btn.innerHTML='<span>✓</span><span>링크가 복사됐어요!</span>';
-      setTimeout(()=>{btn.innerHTML=orig;},2500);
-    } catch(e){
-      alert('링크: '+url);
+    // 높이 측정용 임시 캔버스
+    const tmp=document.createElement('canvas');
+    tmp.width=W;
+    const tc=tmp.getContext('2d');
+    let totalH=200;
+    if(p.overview){
+      tc.font='22px sans-serif';
+      totalH+=measureH(tc,p.overview.title||'',W-PAD*2,30)+24;
+      tc.font='15px sans-serif';
+      totalH+=measureH(tc,p.overview.answer||'',W-PAD*2,22)+40;
     }
+    (p.sections||[]).forEach(s=>{
+      totalH+=44;
+      tc.font='15px sans-serif';
+      totalH+=measureH(tc,s.body||'',W-PAD*2,22)+32;
+    });
+    if(p.advice) totalH+=(p.advice.length*30)+60;
+    totalH+=100;
+
+    const cv=document.createElement('canvas');
+    cv.width=W; cv.height=totalH;
+    const ctx=cv.getContext('2d');
+
+    // 배경
+    const g=ctx.createLinearGradient(0,0,0,totalH);
+    g.addColorStop(0,'#0e0820'); g.addColorStop(1,'#07040F');
+    ctx.fillStyle=g; ctx.fillRect(0,0,W,totalH);
+    ctx.strokeStyle='rgba(175,169,236,0.18)';
+    ctx.lineWidth=1;
+    ctx.strokeRect(16,16,W-32,totalH-32);
+
+    let y=56;
+    // 로고
+    ctx.font='13px serif'; ctx.fillStyle='rgba(175,169,236,0.5)'; ctx.textAlign='center';
+    ctx.fillText('YEON · 연  ✦  타로', W/2, y); y+=36;
+    line(ctx,y,W,PAD); y+=24;
+
+    // 질문
+    ctx.font='15px sans-serif'; ctx.fillStyle='rgba(232,160,188,0.85)'; ctx.textAlign='center';
+    ctx.fillText('✦  '+(selQ?selQ.text:''), W/2, y+16); y+=56;
+    line(ctx,y,W,PAD); y+=24;
+
+    // 카드
+    ctx.font='bold 14px sans-serif'; ctx.fillStyle='rgba(237,233,245,0.88)'; ctx.textAlign='center';
+    const cn=finalCards.map(c=>c.name+(c.isReversed?' ↓':' ↑')).join('  ·  ');
+    ctx.fillText(cn, W/2, y+20); y+=56;
+    line(ctx,y,W,PAD); y+=24;
+
+    // 총평 제목
+    if(p.overview&&p.overview.title){
+      ctx.font='bold 22px sans-serif'; ctx.fillStyle='rgba(237,233,245,0.97)'; ctx.textAlign='left';
+      y+=wrapT(ctx,p.overview.title,PAD,y,W-PAD*2,30)+24;
+    }
+    if(p.overview&&p.overview.answer){
+      ctx.font='15px sans-serif'; ctx.fillStyle='rgba(210,205,232,0.82)'; ctx.textAlign='left';
+      y+=wrapT(ctx,p.overview.answer,PAD,y,W-PAD*2,22)+40;
+    }
+
+    // 섹션
+    (p.sections||[]).forEach(s=>{
+      ctx.font='bold 14px sans-serif'; ctx.fillStyle='rgba(201,169,110,0.85)'; ctx.textAlign='left';
+      ctx.fillText('✦  '+(s.title||''), PAD, y+16); y+=44;
+      ctx.font='15px sans-serif'; ctx.fillStyle='rgba(210,205,232,0.8)'; ctx.textAlign='left';
+      y+=wrapT(ctx,s.body||'',PAD,y,W-PAD*2,22)+32;
+    });
+
+    // 조언
+    if(p.advice&&p.advice.length){
+      line(ctx,y,W,PAD); y+=24;
+      ctx.font='bold 14px sans-serif'; ctx.fillStyle='rgba(201,169,110,0.85)'; ctx.textAlign='left';
+      ctx.fillText('✦  오늘 할 것', PAD, y+16); y+=36;
+      p.advice.forEach((a,i)=>{
+        ctx.font='14px sans-serif'; ctx.fillStyle='rgba(175,169,236,0.82)'; ctx.textAlign='left';
+        y+=wrapT(ctx,(i+1)+'. '+a,PAD+10,y,W-PAD*2-10,20)+12;
+      });
+    }
+
+    // 워터마크
+    ctx.font='13px serif'; ctx.fillStyle='rgba(175,169,236,0.32)'; ctx.textAlign='center';
+    ctx.fillText('yeon-tarot.vercel.app', W/2, totalH-28);
+
+    const link=document.createElement('a');
+    link.download='연의타로_'+me+'님_리딩결과.png';
+    link.href=cv.toDataURL('image/png');
+    link.click();
+
+    btn.innerHTML='<span>✓</span><span>저장됐어요!</span>';
+    setTimeout(()=>{btn.innerHTML=orig;btn.disabled=false;},2500);
+  } catch(e){
+    console.error(e);
+    btn.innerHTML='<span>✗</span><span>'+e.message.slice(0,20)+'</span>';
+    setTimeout(()=>{btn.innerHTML=orig;btn.disabled=false;},3000);
   }
+}
+
+function line(ctx,y,W,PAD){
+  ctx.strokeStyle='rgba(175,169,236,0.15)';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(PAD,y);ctx.lineTo(W-PAD,y);ctx.stroke();
+}
+function measureH(ctx,text,maxW,lh){
+  if(!text)return lh;
+  let line='',h=lh;
+  for(const ch of text){const t=line+ch;if(ctx.measureText(t).width>maxW&&line){line=ch;h+=lh;}else line=t;}
+  return h;
+}
+function wrapT(ctx,text,x,y,maxW,lh){
+  if(!text)return lh;
+  let line='',h=lh,cy=y+lh;
+  for(const ch of text){const t=line+ch;if(ctx.measureText(t).width>maxW&&line){ctx.fillText(line,x,cy);line=ch;cy+=lh;h+=lh;}else line=t;}
+  if(line)ctx.fillText(line,x,cy);
+  return h;
 }
 
 
