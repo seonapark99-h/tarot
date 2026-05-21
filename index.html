@@ -2662,6 +2662,16 @@ function renderResult(p){
     },{threshold:.4});
     secs.forEach(s=>obs.observe(s));
   }
+
+  // ── 결과 이미지 저장 버튼 ──
+  body.insertAdjacentHTML('beforeend',`
+    <div style="padding:8px 22px 16px;">
+      <button class="share-btn" onclick="shareReading()">
+        <span>✦</span>
+        <span>결과 이미지 저장하기</span>
+      </button>
+    </div>
+  `);
 }
 
 
