@@ -85,9 +85,9 @@ canvas#bg{position:fixed;inset:0;z-index:0;pointer-events:none;}
   margin:20px auto 0;width:100%;max-width:280px;
   padding:14px 20px;
   font-family:'Cormorant Garamond',serif;font-size:14px;
-  color:rgba(175,169,236,.72);letter-spacing:2px;
-  cursor:pointer;border:1px solid rgba(175,169,236,.2);
-  border-radius:3px;background:rgba(175,169,236,.04);
+  color:rgba(232,160,188,.85);letter-spacing:2px;
+  cursor:pointer;border:1px solid rgba(232,160,188,.3);
+  border-radius:3px;background:rgba(201,92,132,.05);
   transition:all .3s;
 }
 .principle-btn:hover{color:rgba(175,169,236,.72);}
@@ -179,7 +179,7 @@ canvas#bg{position:fixed;inset:0;z-index:0;pointer-events:none;}
 .cat-card .cd{display:none;}
 
 /* ══ S3b 질문 ══ */
-.q-back{display:inline-flex;align-items:center;gap:6px;font-family:'Cormorant Garamond',serif;font-size:12px;color:rgba(175,169,236,.32);cursor:pointer;border:none;background:none;padding:0;letter-spacing:1px;margin-bottom:12px;transition:color .2s;}
+.q-back{display:inline-flex;align-items:center;gap:8px;font-family:'Noto Serif KR',serif;font-size:13px;font-weight:200;color:rgba(175,169,236,.7);cursor:pointer;border:1px solid rgba(175,169,236,.2);background:rgba(175,169,236,.05);padding:10px 16px;border-radius:3px;letter-spacing:.5px;margin-bottom:16px;transition:all .2s;width:100%;box-sizing:border-box;}
 .q-back:hover{color:rgba(175,169,236,.6);}
 .q-list{display:flex;flex-direction:column;gap:7px;padding:0 22px;}
 .q-item{
@@ -205,9 +205,6 @@ canvas#bg{position:fixed;inset:0;z-index:0;pointer-events:none;}
 .deck-card-wrap:nth-child(1){transform:translate(-4px,-4px) rotate(-2.5deg);}
 .deck-card-wrap:nth-child(2){transform:translate(2px,-2px) rotate(1deg);}
 .deck-card-wrap:nth-child(3){transform:translate(0,0);}
-.deck-stack.sh .deck-card-wrap:nth-child(1){animation:sha .45s ease;}
-.deck-stack.sh .deck-card-wrap:nth-child(2){animation:shb .45s ease .04s;}
-.deck-stack.sh .deck-card-wrap:nth-child(3){animation:shc .45s ease .08s;}
 @keyframes sha{0%{transform:translate(-4px,-4px) rotate(-2.5deg);}35%{transform:translate(-48px,-20px) rotate(-16deg);}65%{transform:translate(30px,10px) rotate(9deg);}100%{transform:translate(-4px,-4px) rotate(-2.5deg);}}
 @keyframes shb{0%{transform:translate(2px,-2px) rotate(1deg);}35%{transform:translate(36px,-16px) rotate(13deg);}65%{transform:translate(-26px,15px) rotate(-6deg);}100%{transform:translate(2px,-2px) rotate(1deg);}}
 @keyframes shc{0%{transform:translate(0,0);}35%{transform:translate(-20px,20px) rotate(-8deg);}65%{transform:translate(20px,-10px) rotate(6deg);}100%{transform:translate(0,0);}}
@@ -251,7 +248,7 @@ canvas#bg{position:fixed;inset:0;z-index:0;pointer-events:none;}
 .fc-back img{width:100%;height:100%;object-fit:cover;}
 .fc.picked{box-shadow:0 0 0 2.5px rgba(175,169,236,.8),0 0 20px rgba(175,169,236,.28)!important;}
 .fc.picked .fc-back{box-shadow:0 0 0 2px rgba(175,169,236,.75),0 0 20px rgba(175,169,236,.3);}
-.fc.locked:not(.picked){opacity:.22;pointer-events:none;}
+.fc.locked:not(.picked){pointer-events:none;}
 
 /* 수집 애니메이션 */
 .cards-collect-overlay{position:fixed;inset:0;z-index:100;pointer-events:none;display:none;}
@@ -284,7 +281,7 @@ canvas#bg{position:fixed;inset:0;z-index:0;pointer-events:none;}
 }
 .fxc:hover{border-color:rgba(175,169,236,.26);background:rgba(175,169,236,.05);}
 .fxc.hi{border-color:rgba(175,169,236,.45);background:rgba(175,169,236,.07);}
-.fxc img{width:100%;max-height:46px;object-fit:contain;display:block;}
+.fxc img{width:100%;height:130px;object-fit:cover;display:block;}
 .fxc.reversed img{transform:rotate(180deg);}
 .fxc .nm{font-size:7px;color:rgba(175,169,236,.72);line-height:1.3;margin-top:3px;font-family:'Cormorant Garamond',serif;letter-spacing:.5px;}
 .fxc .dtag{font-size:8px;padding:2px 5px;border-radius:3px;display:inline-block;margin-top:2px;letter-spacing:.5px;}
@@ -356,18 +353,13 @@ canvas#bg{position:fixed;inset:0;z-index:0;pointer-events:none;}
 
 
 
-.followup-block{margin:0 22px 10px;border:1px solid rgba(201,169,110,.16);border-radius:3px;padding:18px 20px;background:rgba(201,169,110,.025);}
-.followup-title{font-family:'Cormorant Garamond',serif;font-size:10px;color:rgba(201,169,110,.42);letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;}
-.followup-list{display:flex;flex-direction:column;gap:6px;}
-.followup-item{
-  border:1px solid rgba(201,169,110,.12);border-radius:3px;
-  padding:12px 14px;cursor:pointer;transition:all .22s;
-  display:flex;align-items:center;justify-content:space-between;
-  background:rgba(255,255,255,.015);
-}
-.followup-item:hover{border-color:rgba(201,169,110,.28);background:rgba(201,169,110,.04);}
-.followup-item .ft{font-family:'Noto Serif KR',serif;font-size:12px;font-weight:200;color:rgba(228,205,158,.85);letter-spacing:.3px;line-height:1.55;}
-.followup-item .fa{font-size:14px;color:rgba(201,169,110,.55);flex-shrink:0;margin-left:10px;}
+
+
+
+
+
+
+
 
 /* ══ 이름 / 카드 강조 ══ */
 .na{color:rgba(175,169,236,.88);font-style:normal;font-weight:300;}
@@ -476,11 +468,576 @@ strong.cn{color:rgba(201,169,110,.78);font-weight:400;}
   color:rgba(201,169,110,.65);letter-spacing:.8px;
   margin-bottom:10px;line-height:1.6;
 }
+
+/* ── 가챠 이펙트 ── */
+@keyframes wiggle-minor{
+  0%,100%{transform:rotate(0deg) scale(1);}
+  15%{transform:rotate(-3deg) scale(1.04);}
+  30%{transform:rotate(3deg) scale(1.06);}
+  45%{transform:rotate(-2deg) scale(1.04);}
+  60%{transform:rotate(2deg) scale(1.06);}
+  75%{transform:rotate(-1deg) scale(1.03);}
+}
+@keyframes wiggle-major{
+  0%,100%{transform:rotate(0deg) scale(1);}
+  10%{transform:rotate(-5deg) scale(1.06);}
+  20%{transform:rotate(5deg) scale(1.1);}
+  30%{transform:rotate(-4deg) scale(1.08);}
+  40%{transform:rotate(4deg) scale(1.1);}
+  50%{transform:rotate(-3deg) scale(1.07);}
+  60%{transform:rotate(3deg) scale(1.09);}
+  70%{transform:rotate(-2deg) scale(1.06);}
+  80%{transform:rotate(2deg) scale(1.08);}
+  90%{transform:rotate(-1deg) scale(1.04);}
+}
+@keyframes cardRevealIn{
+  0%{opacity:0;transform:scale(0.15) translateY(30px);}
+  40%{opacity:0.7;transform:scale(0.85) translateY(10px);}
+  70%{transform:scale(1.06) translateY(-4px);}
+  85%{transform:scale(0.97);}
+  100%{opacity:1;transform:scale(1) translateY(0);}
+}
+@keyframes cardRevealOut{
+  0%{opacity:1;transform:scale(1);}
+  30%{transform:scale(1.05);}
+  100%{opacity:0;transform:scale(0.1) translateY(-40px);}
+}
+@keyframes keywordIn{
+  0%{opacity:0;transform:translateY(16px) scale(0.9);}
+  100%{opacity:1;transform:translateY(0) scale(1);}
+}
+@keyframes glowPulse{
+  0%,100%{opacity:.5;}
+  50%{opacity:1;}
+}
+@keyframes particle{
+  0%{transform:translate(0,0) scale(1);opacity:1;}
+  100%{transform:translate(var(--tx),var(--ty)) scale(0);opacity:0;}
+}
+
+/* 가챠 오버레이 */
+.gacha-overlay{
+  position:fixed;inset:0;z-index:200;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  background:rgba(7,4,15,0);
+  pointer-events:none;
+  transition:background .3s;
+}
+.gacha-overlay.active{
+  background:rgba(7,4,15,.96);
+  pointer-events:all;
+}
+.gacha-card-wrap{
+  position:relative;
+  width:140px;height:230px;
+  border-radius:10px;overflow:hidden;
+  opacity:0;
+}
+.gacha-card-wrap.reveal{
+  animation:cardRevealIn 1.1s cubic-bezier(.2,0,.3,1.2) forwards;
+}
+.gacha-card-wrap.exit{
+  animation:cardRevealOut .4s cubic-bezier(.4,0,.8,.6) forwards;
+}
+.gacha-card-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
+.gacha-glow{
+  position:absolute;inset:-30px;
+  border-radius:50%;
+  filter:blur(40px);
+  opacity:0;
+  transition:opacity .4s;
+  pointer-events:none;
+}
+.gacha-card-wrap.reveal .gacha-glow{
+  animation:glowPulse 1s ease infinite;
+}
+.gacha-tier-badge{
+  font-family:'Cormorant Garamond',serif;
+  font-size:10px;letter-spacing:3px;text-transform:uppercase;
+  margin-bottom:16px;opacity:0;
+  transition:opacity .3s .4s;
+}
+.gacha-card-name{
+  font-family:'Noto Serif KR',serif;
+  font-size:20px;font-weight:200;
+  color:#EDE9F5;letter-spacing:2px;
+  margin-top:20px;opacity:0;
+  animation:none;
+}
+.gacha-keyword{
+  font-family:'Cormorant Garamond',serif;
+  font-size:15px;font-style:italic;
+  margin-top:8px;opacity:0;
+  letter-spacing:1px;
+}
+.gacha-dir{
+  font-family:'Cormorant Garamond',serif;
+  font-size:11px;letter-spacing:2px;
+  margin-top:6px;opacity:0;
+  color:rgba(175,169,236,.6);
+}
+.gacha-particle{
+  position:absolute;
+  width:4px;height:4px;
+  border-radius:50%;
+  pointer-events:none;
+}
+
+/* ── 추가 질문 채팅 ── */
+.chat-wrap{
+  padding:0 22px 16px;
+}
+.chat-msgs{
+  display:flex;flex-direction:column;gap:12px;
+  margin-bottom:14px;
+}
+.chat-bubble{
+  max-width:88%;padding:12px 15px;
+  border-radius:12px;
+  font-family:'Noto Serif KR',serif;font-size:13px;font-weight:200;
+  line-height:1.8;word-break:keep-all;
+  animation:fi .35s ease;
+}
+.chat-bubble.user{
+  align-self:flex-end;
+  background:rgba(175,169,236,.12);
+  border:1px solid rgba(175,169,236,.22);
+  color:rgba(237,233,245,.9);
+  border-radius:12px 12px 2px 12px;
+}
+.chat-bubble.ai{
+  align-self:flex-start;
+  background:rgba(201,92,132,.07);
+  border:1px solid rgba(201,92,132,.18);
+  color:rgba(237,233,245,.88);
+  border-radius:12px 12px 12px 2px;
+}
+.chat-bubble.loading{
+  align-self:flex-start;
+  background:rgba(175,169,236,.06);
+  border:1px solid rgba(175,169,236,.12);
+  color:rgba(175,169,236,.5);
+  font-style:italic;
+  font-family:'Cormorant Garamond',serif;
+  font-size:13px;
+}
+.chat-hint{
+  font-family:'Cormorant Garamond',serif;font-size:11px;
+  color:rgba(175,169,236,.42);letter-spacing:.8px;
+  text-align:center;margin-bottom:12px;
+}
+.chat-hint.done{color:rgba(201,92,132,.5);}
+.chat-input-wrap{
+  display:flex;gap:8px;align-items:flex-end;
+}
+.chat-input{
+  flex:1;background:rgba(175,169,236,.05);
+  border:1px solid rgba(175,169,236,.18);border-radius:8px;
+  color:rgba(237,233,245,.9);
+  font-family:'Noto Serif KR',serif;font-size:13px;font-weight:200;
+  line-height:1.7;padding:10px 13px;outline:none;resize:none;
+  transition:border-color .25s;
+}
+.chat-input:focus{border-color:rgba(175,169,236,.4);}
+.chat-input::placeholder{color:rgba(175,169,236,.3);font-size:12px;}
+.chat-send{
+  padding:10px 14px;
+  background:rgba(175,169,236,.12);
+  border:1px solid rgba(175,169,236,.25);
+  border-radius:8px;
+  color:rgba(175,169,236,.8);
+  font-family:'Cormorant Garamond',serif;
+  font-size:13px;letter-spacing:.5px;
+  cursor:pointer;transition:all .25s;
+  white-space:nowrap;
+}
+.chat-send:disabled{opacity:.35;cursor:not-allowed;}
+.chat-send:not(:disabled):hover{background:rgba(175,169,236,.22);color:#EDE9F5;}
+
+/* ── 공유 버튼 ── */
+.share-btn{
+  width:100%;padding:16px;
+  background:linear-gradient(135deg,rgba(123,111,212,.1),rgba(201,92,132,.08));
+  border:1px solid rgba(175,169,236,.22);
+  border-radius:4px;
+  color:rgba(175,169,236,.7);
+  font-family:'Noto Serif KR',serif;font-size:13px;font-weight:200;
+  letter-spacing:2px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  transition:all .3s;
+}
+.share-btn:hover{
+  border-color:rgba(175,169,236,.45);
+  color:rgba(237,233,245,.9);
+  background:linear-gradient(135deg,rgba(123,111,212,.18),rgba(201,92,132,.14));
+}
+
+/* ── 후기 캐로셀 ── */
+.review-section{
+  margin:24px 0 8px;
+  width:100%;
+  overflow:hidden;
+}
+.review-carousel{
+  width:100%;
+  overflow:hidden;
+}
+.review-track{
+  display:flex;
+  transition:transform .4s cubic-bezier(.4,0,.2,1);
+  will-change:transform;
+}
+.review-card{
+  min-width:100%;
+  padding:0 22px;
+  box-sizing:border-box;
+}
+.review-card > div{
+  background:rgba(175,169,236,.04);
+  border:1px solid rgba(175,169,236,.12);
+  border-radius:6px;
+  padding:20px 18px;
+}
+.review-stars{
+  font-size:12px;color:rgba(201,169,110,.8);
+  letter-spacing:2px;margin-bottom:10px;
+}
+.review-text{
+  font-family:'Noto Serif KR',serif;
+  font-size:13px;font-weight:200;
+  color:rgba(237,233,245,.82);
+  line-height:1.95;word-break:keep-all;
+  margin-bottom:12px;
+  font-style:italic;
+}
+.review-author{
+  font-family:'Cormorant Garamond',serif;
+  font-size:11px;color:rgba(175,169,236,.45);
+  letter-spacing:1px;text-align:right;
+}
+.review-dots{
+  display:flex;justify-content:center;gap:6px;
+  margin-top:14px;
+}
+.rdot{
+  width:5px;height:5px;border-radius:50%;
+  background:rgba(175,169,236,.2);
+  transition:background .3s, transform .3s;
+  cursor:pointer;
+}
+.rdot.on{
+  background:rgba(175,169,236,.7);
+  transform:scale(1.3);
+}
+
+/* ── 랜딩 고정 하단 CTA ── */
+.landing-fixed-cta{
+  position:fixed;
+  bottom:0;left:0;right:0;
+  z-index:50;
+  padding:12px 22px 24px;
+  background:linear-gradient(to top, rgba(7,4,15,1) 60%, rgba(7,4,15,0));
+  display:none;
+  flex-direction:column;
+  align-items:center;
+}
+.landing-fixed-cta.show{
+  display:flex;
+}
+
+/* ── S5 카드 선택 배경 밝게 ── */
+
+
+/* ── 가챠 꿈틀 애니 개선 ── */
+@keyframes wiggle-minor-glow{
+  0%{transform:scale(1);box-shadow:0 0 0px rgba(255,255,255,0);}
+  10%{transform:scale(1.1) rotate(-3deg);box-shadow:0 0 18px 6px rgba(255,255,255,.9),0 0 36px 12px rgba(255,255,255,.4);}
+  25%{transform:scale(1.15) rotate(4deg);box-shadow:0 0 24px 8px rgba(220,210,255,.85),0 0 50px 16px rgba(220,210,255,.4);}
+  40%{transform:scale(1.13) rotate(-3deg);box-shadow:0 0 28px 9px rgba(175,169,236,.88),0 0 58px 20px rgba(175,169,236,.45);}
+  55%{transform:scale(1.16) rotate(3deg);box-shadow:0 0 32px 10px rgba(175,169,236,.85),0 0 64px 22px rgba(175,169,236,.4);}
+  70%{transform:scale(1.13) rotate(-2deg);box-shadow:0 0 28px 9px rgba(175,169,236,.8),0 0 56px 20px rgba(175,169,236,.38);}
+  85%{transform:scale(1.15) rotate(2deg);box-shadow:0 0 24px 8px rgba(175,169,236,.75),0 0 50px 16px rgba(175,169,236,.35);}
+  100%{transform:scale(1);box-shadow:0 0 12px 4px rgba(175,169,236,.4),0 0 30px 10px rgba(175,169,236,.2);}
+}
+@keyframes wiggle-major-glow{
+  0%{transform:scale(1);box-shadow:0 0 0px rgba(255,255,255,0);}
+  8%{transform:scale(1.15) rotate(-6deg);box-shadow:0 0 30px 10px rgba(255,255,255,.95),0 0 60px 20px rgba(255,255,255,.5);}
+  18%{transform:scale(1.22) rotate(6deg);box-shadow:0 0 42px 14px rgba(255,240,200,.9),0 0 84px 28px rgba(255,240,200,.45);}
+  30%{transform:scale(1.18) rotate(-5deg);box-shadow:0 0 46px 16px rgba(230,200,130,.88),0 0 92px 32px rgba(230,200,130,.44);}
+  42%{transform:scale(1.25) rotate(4deg);box-shadow:0 0 52px 18px rgba(201,169,110,.95),0 0 104px 38px rgba(201,169,110,.5);}
+  55%{transform:scale(1.21) rotate(-3deg);box-shadow:0 0 48px 17px rgba(201,169,110,.9),0 0 96px 34px rgba(201,169,110,.48);}
+  68%{transform:scale(1.24) rotate(3deg);box-shadow:0 0 52px 18px rgba(201,169,110,.92),0 0 104px 38px rgba(201,169,110,.5);}
+  80%{transform:scale(1.2) rotate(-2deg);box-shadow:0 0 44px 15px rgba(201,169,110,.85),0 0 88px 30px rgba(201,169,110,.42);}
+  90%{transform:scale(1.22) rotate(2deg);box-shadow:0 0 40px 13px rgba(201,169,110,.8),0 0 80px 28px rgba(201,169,110,.4);}
+  100%{transform:scale(1);box-shadow:0 0 20px 7px rgba(201,169,110,.5),0 0 50px 18px rgba(201,169,110,.25);}
+}
+@keyframes wiggle-minor-big{
+  0%,100%{transform:scale(1);}
+  15%{transform:scale(1.12) rotate(-4deg);}
+  30%{transform:scale(1.16) rotate(4deg);}
+  45%{transform:scale(1.13) rotate(-3deg);}
+  60%{transform:scale(1.17) rotate(3deg);}
+  75%{transform:scale(1.13) rotate(-2deg);}
+  90%{transform:scale(1.15) rotate(2deg);}
+}
+@keyframes wiggle-major-big{
+  0%,100%{transform:scale(1);}
+  8%{transform:scale(1.15) rotate(-6deg);}
+  16%{transform:scale(1.22) rotate(6deg);}
+  24%{transform:scale(1.18) rotate(-5deg);}
+  32%{transform:scale(1.24) rotate(5deg);}
+  40%{transform:scale(1.2) rotate(-4deg);}
+  50%{transform:scale(1.25) rotate(4deg);}
+  60%{transform:scale(1.21) rotate(-3deg);}
+  70%{transform:scale(1.23) rotate(3deg);}
+  80%{transform:scale(1.19) rotate(-2deg);}
+  90%{transform:scale(1.21) rotate(2deg);}
+}
+@keyframes glowExpand{
+  0%{transform:scale(0.5);opacity:0;}
+  20%{opacity:0.9;}
+  60%{transform:scale(3.5);opacity:0.7;}
+  100%{transform:scale(5);opacity:0;}
+}
+@keyframes glowExpandMajor{
+  0%{transform:scale(0.3);opacity:0;}
+  15%{opacity:1;}
+  50%{transform:scale(5);opacity:0.85;}
+  100%{transform:scale(8);opacity:0;}
+}
+
+.q-back:hover{color:rgba(175,169,236,.95);background:rgba(175,169,236,.1);border-color:rgba(175,169,236,.4);}
+
+/* ── 셔플 애니메이션 ── */
+
+  50%{transform:translateX(-14px) rotate(-6deg);}
+  75%{transform:translateX(-20px) rotate(-9deg);}
+  100%{transform:translateX(0) rotate(0deg);}
+}
+
+  50%{transform:translateX(14px) rotate(6deg);}
+  75%{transform:translateX(20px) rotate(9deg);}
+  100%{transform:translateX(0) rotate(0deg);}
+}
+
+  40%{transform:translateY(-10px) rotate(-3deg);}
+  60%{transform:translateY(-18px) rotate(4deg);}
+  80%{transform:translateY(-8px) rotate(-2deg);}
+  100%{transform:translateY(0) rotate(0deg);}
+}
+
+  60%{box-shadow:0 0 28px 8px rgba(175,169,236,.6),0 0 55px 18px rgba(175,169,236,.28);}
+}
+
+/* ── 셔플 애니 3종 ── */
+
+/* A. 꿈틀 (30%) */
+@keyframes shuf-A-left{0%{transform:rotate(0)}40%{transform:rotate(-8deg) translateX(-8px)}100%{transform:rotate(0)}}
+@keyframes shuf-A-mid{0%{transform:translateY(0)}40%{transform:translateY(-8px)}100%{transform:translateY(0)}}
+@keyframes shuf-A-right{0%{transform:rotate(0)}40%{transform:rotate(8deg) translateX(8px)}100%{transform:rotate(0)}}
+@keyframes shuf-A-glow{0%,100%{filter:none}50%{filter:drop-shadow(0 0 8px rgba(175,169,236,.5))}}
+
+/* B. 크게 섞임 (20%) */
+@keyframes shuf-B-left{0%{transform:rotate(0) translate(0,0)}30%{transform:rotate(-20deg) translate(-22px,6px)}65%{transform:rotate(-14deg) translate(-16px,3px)}100%{transform:rotate(0) translate(0,0)}}
+@keyframes shuf-B-mid{0%{transform:translate(0,0) rotate(0)}35%{transform:translate(0,-26px) rotate(8deg)}70%{transform:translate(0,-18px) rotate(-4deg)}100%{transform:translate(0,0) rotate(0)}}
+@keyframes shuf-B-right{0%{transform:rotate(0) translate(0,0)}30%{transform:rotate(20deg) translate(22px,6px)}65%{transform:rotate(14deg) translate(16px,3px)}100%{transform:rotate(0) translate(0,0)}}
+@keyframes shuf-B-glow{0%,100%{filter:none}40%{filter:drop-shadow(0 0 16px rgba(175,169,236,.7)) drop-shadow(0 0 30px rgba(175,169,236,.3))}70%{filter:drop-shadow(0 0 12px rgba(175,169,236,.5))}}
+
+/* C. 화려하게 (30%) */
+@keyframes shuf-C-left{0%{transform:rotate(0) translate(0,0)}20%{transform:rotate(-28deg) translate(-32px,10px)}45%{transform:rotate(-35deg) translate(-38px,-5px)}65%{transform:rotate(-22deg) translate(-26px,8px)}85%{transform:rotate(-10deg) translate(-12px,2px)}100%{transform:rotate(0) translate(0,0)}}
+@keyframes shuf-C-mid{0%{transform:translate(0,0) rotate(0) scale(1)}25%{transform:translate(0,-34px) rotate(12deg) scale(1.08)}50%{transform:translate(4px,-28px) rotate(-8deg) scale(1.05)}70%{transform:translate(-2px,-20px) rotate(6deg) scale(1.03)}100%{transform:translate(0,0) rotate(0) scale(1)}}
+@keyframes shuf-C-right{0%{transform:rotate(0) translate(0,0)}20%{transform:rotate(28deg) translate(32px,10px)}45%{transform:rotate(35deg) translate(38px,-5px)}65%{transform:rotate(22deg) translate(26px,8px)}85%{transform:rotate(10deg) translate(12px,2px)}100%{transform:rotate(0) translate(0,0)}}
+@keyframes shuf-C-glow{
+  0%{filter:none}
+  15%{filter:drop-shadow(0 0 20px rgba(255,255,255,.8)) drop-shadow(0 0 40px rgba(175,169,236,.4))}
+  35%{filter:drop-shadow(0 0 28px rgba(201,169,110,.7)) drop-shadow(0 0 56px rgba(201,169,110,.3))}
+  60%{filter:drop-shadow(0 0 22px rgba(175,169,236,.8)) drop-shadow(0 0 44px rgba(175,169,236,.4))}
+  80%{filter:drop-shadow(0 0 14px rgba(175,169,236,.5))}
+  100%{filter:none}
+}
+
+/* 타입별 클래스 */
+.shuf-A #dc0{animation:shuf-A-left .55s cubic-bezier(.4,0,.2,1) forwards;}
+.shuf-A #dc1{animation:shuf-A-mid .55s cubic-bezier(.4,0,.2,1) .05s forwards;}
+.shuf-A #dc2{animation:shuf-A-right .55s cubic-bezier(.4,0,.2,1) .1s forwards;}
+.shuf-A{animation:shuf-A-glow .55s ease forwards;}
+
+.shuf-B #dc0{animation:shuf-B-left .75s cubic-bezier(.4,0,.2,1) forwards;}
+.shuf-B #dc1{animation:shuf-B-mid .75s cubic-bezier(.4,0,.2,1) .07s forwards;}
+.shuf-B #dc2{animation:shuf-B-right .75s cubic-bezier(.4,0,.2,1) .14s forwards;}
+.shuf-B{animation:shuf-B-glow .75s ease forwards;}
+
+.shuf-C #dc0{animation:shuf-C-left 1.1s cubic-bezier(.4,0,.2,1) forwards;}
+.shuf-C #dc1{animation:shuf-C-mid 1.1s cubic-bezier(.4,0,.2,1) .08s forwards;}
+.shuf-C #dc2{animation:shuf-C-right 1.1s cubic-bezier(.4,0,.2,1) .16s forwards;}
+.shuf-C{animation:shuf-C-glow 1.1s ease forwards;}
+
+/* D. 소용돌이 회전 */
+@keyframes shuf-D-left{0%{transform:rotate(0) translate(0,0)}25%{transform:rotate(-45deg) translate(-20px,-15px)}50%{transform:rotate(-30deg) translate(-28px,5px)}75%{transform:rotate(-15deg) translate(-15px,-5px)}100%{transform:rotate(0) translate(0,0)}}
+@keyframes shuf-D-mid{0%{transform:rotate(0) scale(1)}30%{transform:rotate(180deg) scale(0.85) translateY(-10px)}60%{transform:rotate(270deg) scale(0.9)}100%{transform:rotate(360deg) scale(1)}}
+@keyframes shuf-D-right{0%{transform:rotate(0) translate(0,0)}25%{transform:rotate(45deg) translate(20px,-15px)}50%{transform:rotate(30deg) translate(28px,5px)}75%{transform:rotate(15deg) translate(15px,-5px)}100%{transform:rotate(0) translate(0,0)}}
+@keyframes shuf-D-glow{
+  0%{filter:none}
+  20%{filter:drop-shadow(0 0 18px rgba(201,92,132,.7)) drop-shadow(0 0 36px rgba(201,92,132,.3))}
+  50%{filter:drop-shadow(0 0 24px rgba(175,169,236,.8)) drop-shadow(0 0 48px rgba(175,169,236,.35))}
+  80%{filter:drop-shadow(0 0 16px rgba(201,169,110,.6)) drop-shadow(0 0 32px rgba(201,169,110,.25))}
+  100%{filter:none}
+}
+
+/* E. 폭포 — 카드가 위로 솟았다 쏟아짐 */
+@keyframes shuf-E-left{0%{transform:translate(0,0) rotate(0)}20%{transform:translate(-18px,-40px) rotate(-22deg)}45%{transform:translate(-24px,-55px) rotate(-18deg)}65%{transform:translate(-12px,-30px) rotate(-10deg)}85%{transform:translate(-4px,-10px) rotate(-3deg)}100%{transform:translate(0,0) rotate(0)}}
+@keyframes shuf-E-mid{0%{transform:translate(0,0) scale(1) rotate(0)}15%{transform:translate(0,-50px) scale(1.12) rotate(5deg)}35%{transform:translate(0,-70px) scale(1.15) rotate(-5deg)}55%{transform:translate(0,-50px) scale(1.1) rotate(3deg)}75%{transform:translate(0,-25px) scale(1.05) rotate(-2deg)}100%{transform:translate(0,0) scale(1) rotate(0)}}
+@keyframes shuf-E-right{0%{transform:translate(0,0) rotate(0)}20%{transform:translate(18px,-40px) rotate(22deg)}45%{transform:translate(24px,-55px) rotate(18deg)}65%{transform:translate(12px,-30px) rotate(10deg)}85%{transform:translate(4px,-10px) rotate(3deg)}100%{transform:translate(0,0) rotate(0)}}
+@keyframes shuf-E-glow{
+  0%{filter:none}
+  10%{filter:drop-shadow(0 0 12px rgba(255,255,255,.9)) drop-shadow(0 0 24px rgba(255,255,255,.4))}
+  30%{filter:drop-shadow(0 0 28px rgba(201,169,110,.85)) drop-shadow(0 0 60px rgba(201,169,110,.4))}
+  55%{filter:drop-shadow(0 0 32px rgba(175,169,236,.9)) drop-shadow(0 0 65px rgba(175,169,236,.45))}
+  80%{filter:drop-shadow(0 0 18px rgba(175,169,236,.6))}
+  100%{filter:none}
+}
+
+.shuf-D #dc0{animation:shuf-D-left .9s cubic-bezier(.4,0,.2,1) forwards;}
+.shuf-D #dc1{animation:shuf-D-mid .9s cubic-bezier(.4,0,.2,1) .06s forwards;}
+.shuf-D #dc2{animation:shuf-D-right .9s cubic-bezier(.4,0,.2,1) .12s forwards;}
+.shuf-D{animation:shuf-D-glow .9s ease forwards;}
+
+.shuf-E #dc0{animation:shuf-E-left 1.0s cubic-bezier(.3,0,.2,1) forwards;}
+.shuf-E #dc1{animation:shuf-E-mid 1.0s cubic-bezier(.3,0,.2,1) .07s forwards;}
+.shuf-E #dc2{animation:shuf-E-right 1.0s cubic-bezier(.3,0,.2,1) .14s forwards;}
+.shuf-E{animation:shuf-E-glow 1.0s ease forwards;}
+
+/* ── 스프레드 화면 ── */
+#s5{overflow:hidden;position:relative;}
+.spread-header{
+  padding:20px 22px 0;
+  flex-shrink:0;
+}
+.spread-hint{
+  font-family:'Cormorant Garamond',serif;
+  font-size:14px;font-style:italic;
+  color:rgba(175,169,236,.5);
+  letter-spacing:1px;line-height:1.8;
+  text-align:center;
+  padding:16px 30px 0;
+  flex-shrink:0;
+}
+.spread-area{
+  flex:1;
+  position:relative;
+  width:100%;
+  min-height:320px;
+}
+.spread-cta{
+  padding:16px 22px 36px;
+  flex-shrink:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.spread-card{
+  position:absolute;
+  width:38px;
+  height:63px;
+  border-radius:5px;
+  overflow:hidden;
+  cursor:pointer;
+  transform-origin:bottom center;
+  transition:transform .2s ease, box-shadow .2s;
+  box-shadow:0 4px 12px rgba(0,0,0,.5);
+}
+.spread-card:hover{
+  box-shadow:0 0 14px 4px rgba(175,169,236,.5);
+  z-index:10!important;
+}
+@keyframes spreadOut{
+  from{transform:var(--tf-from);opacity:0;}
+  to{transform:var(--tf-to);opacity:1;}
+}
+
+/* ── 인플레이스 스프레드 ── */
+#spread-area-s4{overflow:visible;}
+.sp-card{
+  position:absolute;
+  width:34px;height:56px;
+  border-radius:4px;overflow:hidden;
+  cursor:default;
+  box-shadow:0 3px 10px rgba(0,0,0,.5);
+  transition:box-shadow .2s;
+}
+@keyframes spreadFan{
+  from{transform:var(--sp-from);opacity:0;}
+  to{transform:var(--sp-to);opacity:1;}
+}
+
+/* ── 가챠 오버레이 강화 이펙트 ── */
+@keyframes auraRotate{
+  0%{transform:translate(-50%,-50%) rotate(0deg) scale(1);}
+  50%{transform:translate(-50%,-50%) rotate(180deg) scale(1.15);}
+  100%{transform:translate(-50%,-50%) rotate(360deg) scale(1);}
+}
+@keyframes auraRotate2{
+  0%{transform:translate(-50%,-50%) rotate(60deg) scale(0.9);}
+  50%{transform:translate(-50%,-50%) rotate(240deg) scale(1.05);}
+  100%{transform:translate(-50%,-50%) rotate(420deg) scale(0.9);}
+}
+@keyframes starFloat{
+  0%{transform:translate(var(--sx),var(--sy)) scale(0) rotate(0deg);opacity:0;}
+  20%{opacity:1;}
+  80%{opacity:0.8;}
+  100%{transform:translate(calc(var(--sx)*2.5),calc(var(--sy)*2.5)) scale(1) rotate(180deg);opacity:0;}
+}
+@keyframes glowPulseStrong{
+  0%,100%{opacity:.4;transform:scale(1);}
+  50%{opacity:1;transform:scale(1.08);}
+}
+@keyframes ringExpand{
+  0%{transform:translate(-50%,-50%) scale(0.2);opacity:0.9;}
+  100%{transform:translate(-50%,-50%) scale(2.5);opacity:0;}
+}
+
+/* 오버레이 배경 별빛 */
+.gacha-overlay.active::before{
+  content:'';
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 40%, rgba(175,169,236,.08) 0%, transparent 60%);
+  pointer-events:none;
+}
+
+/* 카드 글로우 강화 */
+.gacha-glow{
+  position:absolute;
+  border-radius:50%;
+  pointer-events:none;
+  animation:glowPulseStrong 1.5s ease infinite!important;
+}
+
+/* 오버레이 비활성 시 glow 숨김 */
+.gacha-overlay:not(.active) #gacha-glow{opacity:0!important;animation:none!important;}
+.gacha-overlay:not(.active) .gacha-fx-ring,
+.gacha-overlay:not(.active) .gacha-fx-aura,
+.gacha-overlay:not(.active) .gacha-fx-star{display:none!important;}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
 <canvas id="bg"></canvas>
 <div class="wrap">
+
+<!-- 가챠 오버레이 -->
+<div class="gacha-overlay" id="gacha-overlay">
+  <div class="gacha-tier-badge" id="gacha-badge"></div>
+  <div style="position:relative;">
+    <div class="gacha-glow" id="gacha-glow"></div>
+    <div class="gacha-card-wrap" id="gacha-card-wrap">
+      <img id="gacha-card-img" src="" alt=""/>
+    </div>
+  </div>
+  <div class="gacha-card-name" id="gacha-card-name"></div>
+  <div class="gacha-keyword" id="gacha-keyword"></div>
+  <div class="gacha-dir" id="gacha-dir"></div>
+</div>
 
 <!-- 원리 모달 -->
 <div class="modal" id="modal">
@@ -510,17 +1067,67 @@ strong.cn{color:rgba(201,169,110,.78);font-weight:400;}
       <div class="brand-en">Yeonui · 인연</div>
       <div class="brand-kr">연의<br><span>타로</span></div>
       <div class="brand-sub">Yeon Tarot</div>
+      <div style="font-family:'Noto Serif KR',serif;font-size:13px;font-weight:300;color:rgba(175,169,236,.65);letter-spacing:.8px;margin-top:12px;line-height:1.8;text-align:center;">2만 명이 검증한 클로드 AI 기반<br>연애 전문 타로</div>
     </div>
     <div class="rule"></div>
     <div class="copy-q">짝사랑, 재회,<br>연인의 속마음—<br><em>알고 싶으신가요?</em></div>
-    <div class="copy-body">답은 없습니다. 다만 당신이<br>간절하게 그 사람을 떠올리며<br>카드를 뽑는 순간,<br>그 <strong>찰나의 선택</strong>은 이미<br>우주가 설계한 흐름 위에 있습니다.</div>
-    <button class="principle-btn" onclick="document.getElementById('modal').classList.add('open')">연의 타로 원리 보기</button>
-    <div class="cta-block">
-      <div style="text-align:center;"><div class="free-badge"><div class="free-dot"></div>첫 리딩 무료</div></div>
-      <button class="cta-btn" onclick="go('2')">운명을 확인하러 가기</button>
-      <div class="cta-hint">이후 리딩 990원 · 언제든 시작 가능</div>
+    <div class="copy-body">
+      <div style="font-family:'Noto Serif KR',serif;font-size:13.5px;font-weight:300;color:rgba(201,92,132,.88);letter-spacing:.3px;line-height:2;margin-bottom:20px;padding:14px 16px;border-left:2px solid rgba(201,92,132,.45);background:rgba(201,92,132,.05);border-radius:0 3px 3px 0;text-align:left;">
+        ✦ 당부의 말씀<br>연의 타로는 카드를 고르는 순간<br>구체적인 바람 / 희망 / 질문을<br>강하게 떠올려야 합니다.
+      </div>
+      <div style="font-family:'Noto Serif KR',serif;font-size:17px;font-weight:200;color:rgba(237,233,245,.92);letter-spacing:.5px;line-height:1.9;word-break:keep-all;text-align:center;">
+        당신이 간절하게 떠올리며<br>카드를 뽑는 그 찰나의 순간,<br><em style="font-style:normal;color:rgba(201,169,110,.9);font-size:19px;">운명을 확인합니다.</em>
+      </div>
     </div>
+    <button class="principle-btn" onclick="document.getElementById('modal').classList.add('open')">연의 타로 원리 보기</button>
+    <!-- 후기 캐로셀 -->
+    <div class="review-section">
+      <div class="review-carousel" id="reviewCarousel">
+        <div class="review-track" id="reviewTrack">
+          <div class="review-card">
+            <div class="review-stars">★★★★★</div>
+            <div class="review-text">"재회 질문을 했는데 정말 소름이 돋았어요. 카드 해석이 너무 구체적이어서 진짜 타로 선생님한테 받은 것 같았어요."</div>
+            <div class="review-author">— 20대 여성, 재회 리딩</div>
+          </div>
+          <div class="review-card">
+            <div class="review-stars">★★★★★</div>
+            <div class="review-text">"그 사람 속마음이 궁금해서 해봤는데 묘하게 딱 맞았어요. 친구한테도 추천했고 친구도 너무 신기하다고 했어요 ㅋㅋ"</div>
+            <div class="review-author">— 20대 여성, 썸 리딩</div>
+          </div>
+          <div class="review-card">
+            <div class="review-stars">★★★★★</div>
+            <div class="review-text">"이별 후 힘들었는데 타로 결과가 저한테 필요한 말을 정확히 해줬어요. 위로가 됐고 앞으로 어떻게 해야 할지 정리됐어요."</div>
+            <div class="review-author">— 20대 여성, 전연인 리딩</div>
+          </div>
+          <div class="review-card">
+            <div class="review-stars">★★★★★</div>
+            <div class="review-text">"남사친이 나를 어떻게 생각하는지 궁금했는데 카드 해석이 너무 섬세하고 정확했어요. 다음에 또 해볼 거예요!"</div>
+            <div class="review-author">— 20대 여성, 남사친 리딩</div>
+          </div>
+          <div class="review-card">
+            <div class="review-stars">★★★★★</div>
+            <div class="review-text">"짝사랑 상대가 날 좋아하는지 물었는데 카드 세 장이 다 연결되어서 설명해줬어요. 이렇게 자세한 타로 처음이에요."</div>
+            <div class="review-author">— 20대 여성, 짝사랑 리딩</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-dots" id="reviewDots">
+        <span class="rdot on"></span>
+        <span class="rdot"></span>
+        <span class="rdot"></span>
+        <span class="rdot"></span>
+        <span class="rdot"></span>
+      </div>
+    </div>
+
+    <div style="height:90px;"></div><!-- 고정 버튼 공간 확보 -->
   </div>
+</div>
+
+<!-- 랜딩 고정 하단 CTA -->
+<div class="landing-fixed-cta" id="landing-fixed-cta">
+  <button class="cta-btn" onclick="go('2')" style="margin-bottom:0;">✦ &nbsp;운명을 확인하러 가기</button>
+  <div class="cta-hint" style="margin-top:6px;">연의 타로 · 3장 리딩</div>
 </div>
 
 <!-- S2 이름 -->
@@ -567,7 +1174,7 @@ strong.cn{color:rgba(201,169,110,.78);font-weight:400;}
 <div class="sc" id="s3b">
   <div class="scroll-area">
     <div style="padding:36px 24px 16px;">
-      <button class="q-back" onclick="go('3a')">← 카테고리 다시 선택</button>
+      <button class="q-back" onclick="go('3a')">‹ &nbsp;카테고리 다시 선택</button>
       <div class="ey" id="qb-ey"></div>
       <div style="font-family:'Noto Serif KR',serif;font-size:17px;font-weight:200;color:#EDE9F5;letter-spacing:1px;margin-top:6px;" id="qb-tt"></div>
       <div style="font-family:'Cormorant Garamond',serif;font-size:13px;font-style:italic;color:rgba(175,169,236,.28);margin-top:6px;" id="qb-sub">가장 궁금한 것을 선택하세요</div>
@@ -595,19 +1202,19 @@ strong.cn{color:rgba(201,169,110,.78);font-weight:400;}
     </div>
 
     <div id="free-q-wrap" style="display:none;padding:0 22px;">
-      <div style="font-family:'Noto Serif KR',serif;font-size:13px;font-weight:200;color:rgba(232,160,188,.75);line-height:1.9;margin-bottom:16px;padding:12px 14px;background:rgba(201,92,132,.04);border-left:2px solid rgba(201,92,132,.3);border-radius:0 3px 3px 0;">
-        ✦ 질문이 구체적일수록 정확도가 높아집니다<br>
-        <span style="font-size:12px;color:rgba(175,169,236,.5);">예: "그 사람이 나를 좋아하는 것 같은데 확신이 없어요" "이번 달 내 연애운이 궁금해요"</span>
-      </div>
       <textarea
         id="free-q-input"
         class="custom-q-input"
         placeholder="무엇이든 자유롭게 물어보세요..."
         rows="4"
         oninput="onFreeQInput()"
-        style="width:100%;"
+        style="width:100%;margin-bottom:10px;"
       ></textarea>
-      <div style="font-family:'Cormorant Garamond',serif;font-size:11px;color:rgba(175,169,236,.35);margin-top:8px;letter-spacing:.5px;">뽑힌 카드는 지금 이 순간, 당신의 질문에 응답합니다.</div>
+      <div style="font-family:'Noto Serif KR',serif;font-size:13px;font-weight:200;color:rgba(232,160,188,.75);line-height:1.9;margin-bottom:10px;padding:12px 14px;background:rgba(201,92,132,.04);border-left:2px solid rgba(201,92,132,.3);border-radius:0 3px 3px 0;">
+        ✦ 질문이 구체적일수록 정확도가 높아집니다<br>
+        <span style="font-size:12px;color:rgba(175,169,236,.5);">예: "그 사람이 나를 좋아하는 것 같은데 확신이 없어요" "이번 달 내 연애운이 궁금해요"</span>
+      </div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:11px;color:rgba(175,169,236,.35);margin-top:4px;letter-spacing:.5px;">뽑힌 카드는 지금 이 순간, 당신의 질문에 응답합니다.</div>
     </div>
 
     <div class="pad40"></div>
@@ -622,14 +1229,17 @@ strong.cn{color:rgba(201,169,110,.78);font-weight:400;}
 <div class="sc" id="s4">
   <div style="padding:28px 24px 0;"><div class="ey">집중하세요</div></div>
   <div class="shuf-wrap">
-    <div class="shuf-instr"><div class="shuf-tt" id="shuf-tt"></div><div class="shuf-sb" id="shuf-sb">카드를 터치해서 셔플하세요<br>준비되면 바로 뽑으러 가도 됩니다</div></div>
+    <div class="shuf-instr"><div style="padding:16px 22px 0;">
+        <button class="q-back" onclick="go('3b')">‹ &nbsp;질문 다시 선택</button>
+      </div>
+      <div class="shuf-tt" id="shuf-tt"></div><div class="shuf-sb" id="shuf-sb">카드를 터치해서 셔플하세요<br>준비되면 바로 뽑으러 가도 됩니다</div></div>
     <div class="deck-stack" id="deckStack" onclick="doShuffle()">
       <div class="deck-card-wrap" id="dc0"><img src="" alt=""/></div>
       <div class="deck-card-wrap" id="dc1"><img src="" alt=""/></div>
       <div class="deck-card-wrap" id="dc2"><img src="" alt=""/></div>
     </div>
     <div class="sh-cnt" id="sh-cnt"></div>
-    <button class="sh-ready" id="sh-ready" onclick="go('5')">카드를 뽑으러 가기</button>
+    <button class="sh-ready" id="sh-ready" onclick="openPayment()">✦ &nbsp;3,900원 결제 후 카드 뽑기</button>
   </div>
   <div style="padding:0 24px 44px;flex-shrink:0;"><div class="dots"><div class="d"></div><div class="d"></div><div class="d"></div><div class="d on"></div><div class="d"></div></div></div>
 </div>
@@ -695,6 +1305,73 @@ strong.cn{color:rgba(201,169,110,.78);font-weight:400;}
 <script>
 // 별
 (()=>{const c=document.getElementById('bg'),ctx=c.getContext('2d');function r(){c.width=window.innerWidth;c.height=window.innerHeight;}r();window.addEventListener('resize',r);const st=Array.from({length:110},()=>({x:Math.random(),y:Math.random(),r:Math.random()*1.2+.2,a:Math.random(),da:(0.002+Math.random()*.005)*(Math.random()>.5?1:-1),mn:.02+Math.random()*.05,mx:.11+Math.random()*.28}));const gls=[{x:.5,y:.2,r:200,c:'rgba(85,65,165,.08)'},{x:.8,y:.75,r:160,c:'rgba(145,50,90,.06)'}];(function draw(){const w=c.width,h=c.height;ctx.clearRect(0,0,w,h);const bg=ctx.createRadialGradient(w*.5,h*.15,0,w*.5,h*.15,w*.9);bg.addColorStop(0,'rgba(15,8,30,1)');bg.addColorStop(1,'rgba(6,4,13,1)');ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);gls.forEach(g=>{const gr=ctx.createRadialGradient(g.x*w,g.y*h,0,g.x*w,g.y*h,g.r);gr.addColorStop(0,g.c);gr.addColorStop(1,'transparent');ctx.fillStyle=gr;ctx.fillRect(0,0,w,h);});st.forEach(s=>{s.a+=s.da;if(s.a>=s.mx){s.a=s.mx;s.da*=-1;}if(s.a<=s.mn){s.a=s.mn;s.da*=-1;}ctx.beginPath();ctx.arc(s.x*w,s.y*h,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(192,187,232,${s.a})`;ctx.fill();});requestAnimationFrame(draw);})();})();
+
+
+// ── 카드 등급 & 키워드 ──
+const CARD_REVEAL = {
+  '바보':{'tier':'major','keyword':'도전과 새 출발'},
+  '마법사':{'tier':'major','keyword':'의지와 실현'},
+  '여사제':{'tier':'major','keyword':'직관과 신비'},
+  '여황제':{'tier':'major','keyword':'풍요와 매력'},
+  '황제':{'tier':'major','keyword':'안정과 권위'},
+  '교황':{'tier':'major','keyword':'전통과 신뢰'},
+  '연인':{'tier':'major','keyword':'선택과 끌림'},
+  '전차':{'tier':'major','keyword':'추진과 승리'},
+  '힘':{'tier':'major','keyword':'인내와 용기'},
+  '은둔자':{'tier':'major','keyword':'성찰과 지혜'},
+  '운명의 수레바퀴':{'tier':'major','keyword':'운명의 전환점'},
+  '정의':{'tier':'major','keyword':'균형과 진실'},
+  '매달린 남자':{'tier':'major','keyword':'기다림과 전환'},
+  '죽음':{'tier':'major','keyword':'끝과 새 시작'},
+  '절제':{'tier':'major','keyword':'조화와 치유'},
+  '악마':{'tier':'major','keyword':'집착과 욕망'},
+  '탑':{'tier':'major','keyword':'충격과 해방'},
+  '별':{'tier':'major','keyword':'희망과 회복'},
+  '달':{'tier':'major','keyword':'환상과 불안'},
+  '태양':{'tier':'major','keyword':'기쁨과 명료함'},
+  '심판':{'tier':'major','keyword':'각성과 재탄생'},
+  '세계':{'tier':'major','keyword':'완성과 통합'},
+  '완즈 에이스':{'tier':'minor','keyword':'열정의 시작'},
+  '완즈 2':{'tier':'minor','keyword':'가능성 탐색'},
+  '완즈 3':{'tier':'minor','keyword':'확장과 전망'},
+  '완즈 4':{'tier':'minor','keyword':'안정된 기쁨'},
+  '완즈 5':{'tier':'minor','keyword':'경쟁과 혼선'},
+  '완즈 6':{'tier':'minor','keyword':'인정과 성취'},
+  '완즈 7':{'tier':'minor','keyword':'자기 방어'},
+  '완즈 8':{'tier':'minor','keyword':'빠른 전개'},
+  '완즈 9':{'tier':'minor','keyword':'버팀과 경계'},
+  '완즈 10':{'tier':'minor','keyword':'과중한 짐'},
+  '컵스 에이스':{'tier':'minor','keyword':'새로운 감정'},
+  '컵스 2':{'tier':'minor','keyword':'상호 호감'},
+  '컵스 3':{'tier':'minor','keyword':'즐거운 교류'},
+  '컵스 4':{'tier':'minor','keyword':'감정의 권태'},
+  '컵스 5':{'tier':'minor','keyword':'상실과 후회'},
+  '컵스 6':{'tier':'minor','keyword':'그리움과 추억'},
+  '컵스 7':{'tier':'minor','keyword':'환상과 이상화'},
+  '컵스 8':{'tier':'minor','keyword':'떠남과 탐색'},
+  '컵스 9':{'tier':'minor','keyword':'마음의 만족'},
+  '컵스 10':{'tier':'minor','keyword':'행복한 유대'},
+  '소드 에이스':{'tier':'minor','keyword':'명료한 결단'},
+  '소드 2':{'tier':'minor','keyword':'교착과 보류'},
+  '소드 3':{'tier':'minor','keyword':'상처와 이별'},
+  '소드 4':{'tier':'minor','keyword':'휴식과 회복'},
+  '소드 5':{'tier':'minor','keyword':'자존심 싸움'},
+  '소드 6':{'tier':'minor','keyword':'이행과 회복'},
+  '소드 7':{'tier':'minor','keyword':'숨김과 우회'},
+  '소드 8':{'tier':'minor','keyword':'생각의 감옥'},
+  '소드 9':{'tier':'minor','keyword':'불안과 걱정'},
+  '소드 10':{'tier':'minor','keyword':'완전한 전환'},
+  '펜타클 에이스':{'tier':'minor','keyword':'현실적 기회'},
+  '펜타클 2':{'tier':'minor','keyword':'균형 잡기'},
+  '펜타클 3':{'tier':'minor','keyword':'협력과 구축'},
+  '펜타클 4':{'tier':'minor','keyword':'안정 추구'},
+  '펜타클 5':{'tier':'minor','keyword':'결핍과 불안'},
+  '펜타클 6':{'tier':'minor','keyword':'나눔과 균형'},
+  '펜타클 7':{'tier':'minor','keyword':'기다림과 평가'},
+  '펜타클 8':{'tier':'minor','keyword':'성실한 축적'},
+  '펜타클 9':{'tier':'minor','keyword':'자립과 풍요'},
+  '펜타클 10':{'tier':'minor','keyword':'장기적 안정'},
+};
 
 // ── 카드 이미지 (Base64 인라인) ──
 const CARD_IMGS = {
@@ -768,12 +1445,39 @@ const CARD_BACK = null; // 뒷면은 makeBackSVG() 사용
 // 이미지 로드 실패시 fallback SVG 뒷면
 function makeBackSVG(){
   const d=document.createElement('div');
-  d.style.cssText='width:100%;height:100%;background:#1a0f2e;display:flex;align-items:center;justify-content:center;';
+  d.style.cssText='width:100%;height:100%;background:#120b24;display:flex;align-items:center;justify-content:center;';
   d.innerHTML=`<svg viewBox="0 0 60 100" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
-    <rect width="60" height="100" fill="#1a0f2e"/>
-    <rect x="3" y="3" width="54" height="94" rx="2" fill="none" stroke="rgba(175,169,236,0.3)" stroke-width="0.8"/>
-    ${Array.from({length:4},(_,r)=>Array.from({length:3},(_,c)=>{const x=10+c*20,y=15+r*20;return `<path d="M${x},${y} L${x+5},${y+4} L${x+10},${y} L${x+5},${y-4}Z" fill="none" stroke="rgba(175,169,236,0.18)" stroke-width="0.5"/>`;}).join('')).join('')}
-    <text x="30" y="54" text-anchor="middle" dominant-baseline="central" font-size="14" fill="rgba(175,169,236,0.22)">✦</text>
+    <!-- 배경 -->
+    <rect width="60" height="100" fill="#120b24"/>
+    <!-- 외곽 테두리 -->
+    <rect x="2.5" y="2.5" width="55" height="95" rx="3" fill="none" stroke="rgba(175,169,236,0.35)" stroke-width="0.7"/>
+    <!-- 안쪽 테두리 -->
+    <rect x="5" y="5" width="50" height="90" rx="2" fill="none" stroke="rgba(175,169,236,0.15)" stroke-width="0.5"/>
+
+    <!-- 중앙 별 패턴 (완전 대칭) -->
+    <!-- 큰 별 -->
+    <path d="M30,32 L32.5,39 L40,39 L34,43.5 L36.5,50.5 L30,46 L23.5,50.5 L26,43.5 L20,39 L27.5,39 Z"
+      fill="none" stroke="rgba(175,169,236,0.28)" stroke-width="0.6"/>
+    <!-- 중앙 작은 ✦ -->
+    <text x="30" y="50.5" text-anchor="middle" dominant-baseline="central"
+      font-size="9" fill="rgba(175,169,236,0.45)">✦</text>
+
+    <!-- 코너 다이아몬드 4개 (완전 대칭) -->
+    <path d="M10,16 L12.5,19 L10,22 L7.5,19 Z" fill="none" stroke="rgba(175,169,236,0.22)" stroke-width="0.5"/>
+    <path d="M50,16 L52.5,19 L50,22 L47.5,19 Z" fill="none" stroke="rgba(175,169,236,0.22)" stroke-width="0.5"/>
+    <path d="M10,78 L12.5,81 L10,84 L7.5,81 Z" fill="none" stroke="rgba(175,169,236,0.22)" stroke-width="0.5"/>
+    <path d="M50,78 L52.5,81 L50,84 L47.5,81 Z" fill="none" stroke="rgba(175,169,236,0.22)" stroke-width="0.5"/>
+
+    <!-- 중앙 가로 선 장식 -->
+    <line x1="10" y1="62" x2="24" y2="62" stroke="rgba(175,169,236,0.18)" stroke-width="0.4"/>
+    <line x1="36" y1="62" x2="50" y2="62" stroke="rgba(175,169,236,0.18)" stroke-width="0.4"/>
+    <circle cx="30" cy="62" r="1.2" fill="rgba(175,169,236,0.3)"/>
+
+    <!-- 상하 작은 별 -->
+    <text x="30" y="18" text-anchor="middle" dominant-baseline="central"
+      font-size="5" fill="rgba(175,169,236,0.25)">✦</text>
+    <text x="30" y="83" text-anchor="middle" dominant-baseline="central"
+      font-size="5" fill="rgba(175,169,236,0.25)">✦</text>
   </svg>`;
   return d;
 }
@@ -1084,10 +1788,14 @@ function go(n){
   const t=document.getElementById('s'+n);
   if(t)t.classList.add('on');
   window.scrollTo(0,0);
+  // 랜딩 고정 CTA: S1에서만 표시
+  const fixedCta=document.getElementById('landing-fixed-cta');
+  if(fixedCta) fixedCta.classList.toggle('show', String(n)==='1');
   const ns=String(n);
   if(ns==='3a'){const el=document.getElementById('cat-tt');if(el)el.textContent=`${me}님이 ${them}님에 대해\n가장 궁금한 관계는?`;}
   if(ns==='3b')buildQList();
   if(ns==='4')buildShuf();
+  if(ns==='5'){}// spread는 goSpread()에서 처리
   if(ns==='5')buildDeck();
 }
 function chk2(){me=document.getElementById('nm1').value.trim();document.getElementById('b2').disabled=!me;}
@@ -1225,16 +1933,221 @@ function buildShuf(){
 }
 function doShuffle(){
   const ds=document.getElementById('deckStack');
-  if(ds.classList.contains('sh'))return;
-  ds.classList.add('sh');setTimeout(()=>ds.classList.remove('sh'),500);
+  if(['shuf-A','shuf-B','shuf-C','shuf-D','shuf-E'].some(c=>ds.classList.contains(c)))return;
   shCnt++;
-  const msgs=['한 번 더 하거나 바로 뽑으러 가도 됩니다','조금 더 섞어도 좋아요','이제 뽑으러 가세요','마음이 이끄는 대로','준비됐습니다'];
-  document.getElementById('sh-cnt').textContent=`${shCnt}번 셔플 — ${msgs[Math.min(shCnt-1,msgs.length-1)]}`;
+
+  // 확률별 타입 결정
+  // A: 꿈틀 30%, B: 크게 20%, C: 화려하게 30%, 나머지 20%는 랜덤
+  const r=Math.random();
+  let type, dur;
+  if(r<0.25){ type='shuf-A'; dur=600; }       // 꿈틀 25%
+  else if(r<0.42){ type='shuf-B'; dur=820; }   // 크게 17%
+  else if(r<0.62){ type='shuf-C'; dur=1200; }  // 화려 20%
+  else if(r<0.80){ type='shuf-D'; dur=950; }   // 소용돌이 18%
+  else { type='shuf-E'; dur=1050; }            // 폭포 20%
+
+  ds.classList.add(type);
+  setTimeout(()=>{
+    ['shuf-A','shuf-B','shuf-C','shuf-D','shuf-E'].forEach(c=>ds.classList.remove(c));
+  }, dur);
+
+  // 셔플 횟수별 멘트 (초반 고정 + 이후 순환)
+  const earlyMsgs=[
+    '질문을 마음속에 담아두세요',
+    '카드가 당신의 기운을 읽고 있어요',
+    '조금 더 섞어볼까요?',
+    '우주가 응답하고 있습니다',
+  ];
+  const lateMsgs=[
+    '마음의 준비가 될 때까지 계속 섞어도 좋아요',
+    '당신의 질문이 카드에 담길 때까지',
+    '서두르지 않아도 됩니다',
+    '충분히 느껴질 때 뽑으세요',
+  ];
+  let msg;
+  if(shCnt<=earlyMsgs.length){
+    msg=earlyMsgs[shCnt-1];
+  } else {
+    msg=lateMsgs[(shCnt-earlyMsgs.length-1)%lateMsgs.length];
+  }
+  document.getElementById('sh-cnt').textContent=`✦ ${shCnt}회 셔플  —  ${msg}`;
   document.getElementById('sh-ready').classList.add('show');
   deck24=shuffle(ALL).slice(0,24);
 }
 
 // ── S5: 카드 선택 — 뒷면만, 3장 선택하면 자동 수집 애니메이션 후 결과로 ──
+
+// ── 가챠 이펙트 ──
+function spawnParticles(color, count){
+  spawnStars(color, count);
+}
+
+function spawnStars(color, count){
+  const overlay=document.getElementById('gacha-overlay');
+  for(let i=0;i<count;i++){
+    const p=document.createElement('div');
+    const size=Math.random()<0.3?10:Math.random()<0.5?6:4;
+    const sx=(Math.random()-0.5)*160;
+    const sy=(Math.random()-0.5)*220;
+    p.className='gacha-fx-star';
+    p.style.cssText=`
+      position:absolute;
+      font-size:${size}px;
+      color:${Math.random()<0.5?color:'#fff'};
+      left:50%;top:45%;
+      --sx:${sx}px;--sy:${sy}px;
+      pointer-events:none;
+      text-shadow:0 0 6px ${color};
+      animation:starFloat ${0.8+Math.random()*1.2}s ease-out ${Math.random()*0.4}s forwards;
+    `;
+    p.textContent=Math.random()<0.4?'✦':Math.random()<0.5?'★':'·';
+    overlay.appendChild(p);
+    setTimeout(()=>{if(p.parentNode)p.remove();}, 2200);
+  }
+}
+
+function showGachaReveal(cardEl, cardData, onDone){
+  const reveal=CARD_REVEAL[cardData.name]||{tier:'minor',keyword:''};
+  const isMajor=reveal.tier==='major';
+  const color=isMajor?'#C9A96E':'#AFA9EC';
+  const wiggleDur=isMajor?2000:1100;
+
+  // 1. 카드 커지면서 꿈틀
+  cardEl.style.zIndex='20';
+  cardEl.style.position='relative';
+  cardEl.style.animation=`${isMajor?'wiggle-major-glow':'wiggle-minor-glow'} ${wiggleDur}ms ease-in-out`;
+
+  // 빛은 box-shadow로 처리됨
+
+  setTimeout(()=>{
+    cardEl.style.animation='';
+    cardEl.style.zIndex='';
+    cardEl.style.boxShadow=''; // 빛 잔재 제거
+    cardEl.style.filter='';   // filter 잔재 제거
+
+    // 2. 오버레이 열기
+    const overlay=document.getElementById('gacha-overlay');
+    const wrap=document.getElementById('gacha-card-wrap');
+    const img=document.getElementById('gacha-card-img');
+    const badge=document.getElementById('gacha-badge');
+    const nameEl=document.getElementById('gacha-card-name');
+    const kwEl=document.getElementById('gacha-keyword');
+    const dirEl=document.getElementById('gacha-dir');
+    const glow=document.getElementById('gacha-glow');
+
+    const imgUrl=CARD_IMGS[cardData.name]||'';
+    img.src=imgUrl;
+    img.style.transform=cardData.isReversed?'rotate(180deg)':'';
+
+    badge.textContent=isMajor?'✦ MAJOR ARCANA ✦':'MINOR ARCANA';
+    badge.style.color=color;
+
+    glow.style.background=isMajor
+      ?'radial-gradient(circle, rgba(201,169,110,.9) 0%, rgba(201,169,110,.4) 35%, transparent 70%)'
+      :'radial-gradient(circle, rgba(175,169,236,.85) 0%, rgba(123,111,212,.35) 35%, transparent 70%)';
+    glow.style.width='220%';
+    glow.style.height='220%';
+    glow.style.top='-60%';
+    glow.style.left='-60%';
+
+    overlay.classList.add('active');
+    wrap.classList.remove('reveal','exit');
+    void wrap.offsetWidth;
+    wrap.classList.add('reveal');
+    badge.style.opacity='1';
+
+    // 아우라 링 이펙트
+    for(let r=0;r<(isMajor?3:2);r++){
+      const ring=document.createElement('div');
+      ring.className='gacha-fx-ring';
+      ring.style.cssText=`
+        position:absolute;top:50%;left:50%;
+        width:${180+r*60}px;height:${280+r*90}px;
+        border-radius:50%;
+        border:1px solid ${isMajor?'rgba(201,169,110,'+(0.6-r*0.15)+')':'rgba(175,169,236,'+(0.55-r*0.15)+')'};
+        pointer-events:none;
+        animation:ringExpand ${0.8+r*0.3}s cubic-bezier(.2,0,.4,1) ${r*0.15}s forwards;
+      `;
+      overlay.appendChild(ring);
+      setTimeout(()=>ring.remove(), 1500);
+    }
+
+    // 회전 아우라 (메이저만)
+    if(isMajor){
+      const aura1=document.createElement('div');
+      aura1.className='gacha-fx-aura';
+      aura1.style.cssText=`
+        position:absolute;top:50%;left:50%;
+        width:320px;height:320px;
+        background:conic-gradient(from 0deg, transparent 0%, rgba(201,169,110,.12) 25%, transparent 50%, rgba(201,169,110,.08) 75%, transparent 100%);
+        border-radius:50%;pointer-events:none;
+        animation:auraRotate 3s linear infinite;
+        filter:blur(8px);
+      `;
+      overlay.appendChild(aura1);
+
+      const aura2=document.createElement('div');
+      aura2.className='gacha-fx-aura';
+      aura2.style.cssText=`
+        position:absolute;top:50%;left:50%;
+        width:240px;height:240px;
+        background:conic-gradient(from 120deg, transparent 0%, rgba(175,169,236,.1) 30%, transparent 60%, rgba(201,92,132,.08) 80%, transparent 100%);
+        border-radius:50%;pointer-events:none;
+        animation:auraRotate2 2s linear infinite;
+        filter:blur(6px);
+      `;
+      overlay.appendChild(aura2);
+    }
+
+    // 파티클 (별 모양)
+    setTimeout(()=>{ spawnStars(color, isMajor?40:20); }, 400);
+
+    setTimeout(()=>{
+      nameEl.textContent=cardData.name;
+      nameEl.style.color=color;
+      nameEl.style.animation='keywordIn .5s ease forwards';
+      nameEl.style.opacity='1';
+    }, 500);
+
+    setTimeout(()=>{
+      kwEl.textContent='"'+reveal.keyword+'"';
+      kwEl.style.color=color;
+      kwEl.style.animation='keywordIn .5s ease forwards';
+      kwEl.style.opacity='1';
+    }, 750);
+
+    setTimeout(()=>{
+      dirEl.textContent=cardData.isReversed?'↓ 역방향':'↑ 정방향';
+      dirEl.style.opacity='1';
+    }, 950);
+
+    const holdTime=isMajor?3800:3000;
+    setTimeout(()=>{
+      wrap.classList.remove('reveal');
+      wrap.classList.add('exit');
+      nameEl.style.opacity='0';
+      kwEl.style.opacity='0';
+      dirEl.style.opacity='0';
+      badge.style.opacity='0';
+      setTimeout(()=>{
+        overlay.classList.remove('active');
+        wrap.classList.remove('exit');
+        if(img) img.src='';
+        if(nameEl){nameEl.style.animation='none';nameEl.style.opacity='0';}
+        if(kwEl){kwEl.style.animation='none';kwEl.style.opacity='0';}
+        if(dirEl) dirEl.style.opacity='0';
+        if(badge) badge.style.opacity='0';
+        // 아우라/링/별 잔재 모두 제거
+        overlay.querySelectorAll('.gacha-fx-ring,.gacha-fx-aura,.gacha-fx-star').forEach(el=>el.remove());
+        // gacha-glow 완전 리셋
+        if(glow){glow.style.opacity='0';glow.style.animation='none';}
+        onDone();
+      }, 420);
+    }, holdTime);
+
+  }, wiggleDur);
+}
+
 function buildDeck(){
   picked=[];
   const g=document.getElementById('cards-grid');g.innerHTML='';
@@ -1255,16 +2168,25 @@ function buildDeck(){
         document.getElementById('pick-cnt').textContent=`${3-picked.length}장 더 선택하세요`;
       } else {
         if(picked.length>=3)return;
-        el.classList.add('picked');
-        picked.push(i);
-        if(picked.length===3){
-          // 3장 완료 — 자동으로 수집 애니메이션 후 결과
-          document.getElementById('pick-cnt').textContent='선택 완료 ✦';
-          document.querySelectorAll('.fc:not(.picked)').forEach(f=>f.classList.add('locked'));
-          setTimeout(()=>collectAndProceed(),600);
-        } else {
-          document.getElementById('pick-cnt').textContent=`${3-picked.length}장 더 선택하세요`;
-        }
+        // 가챠 연출 시작 — 선택 잠금
+        document.querySelectorAll('.fc').forEach(f=>f.classList.add('locked'));
+        const card=deck24[i];
+        const isReversed=Math.random()<0.35;
+        card._tempReversed=isReversed;
+        showGachaReveal(el, {...card, isReversed}, ()=>{
+          // 연출 끝 → 실제 선택 처리
+          el.classList.add('picked');
+          picked.push(i);
+          if(picked.length===3){
+            document.getElementById('pick-cnt').textContent='선택 완료 ✦';
+            document.querySelectorAll('.fc:not(.picked)').forEach(f=>f.classList.add('locked'));
+            setTimeout(()=>collectAndProceed(),400);
+          } else {
+            // 다음 카드 선택 가능하게
+            document.querySelectorAll('.fc:not(.picked)').forEach(f=>f.classList.remove('locked'));
+            document.getElementById('pick-cnt').textContent=`${3-picked.length}장 더 선택하세요`;
+          }
+        });
       }
     });
     g.appendChild(el);
@@ -1274,16 +2196,12 @@ function buildDeck(){
 let _collecting=false;
 function collectAndProceed(){
   if(_collecting)return; _collecting=true;
-  finalCards=picked.map(i=>{const c={...deck24[i]};c.isReversed=Math.random()<0.35;return c;});
+  finalCards=picked.map(i=>{const c={...deck24[i]};c.isReversed=typeof c._tempReversed!=='undefined'?c._tempReversed:Math.random()<0.35;delete c._tempReversed;return c;});
 
   const allFcEls=[...document.querySelectorAll('.fc')];
   const pickedEls=picked.map(idx=>allFcEls[idx]).filter(Boolean);
 
-  // 1단계: 선택 안된 카드 페이드아웃
-  document.querySelectorAll('.fc:not(.picked)').forEach(el=>{
-    el.style.transition='opacity 0.3s';
-    el.style.opacity='0';
-  });
+  // 1단계: 선택 안된 카드 유지 (페이드아웃 없음)
 
   // 2단계: 제자리에서 카드 순차 뒤집기
   setTimeout(()=>{
@@ -1458,7 +2376,7 @@ async function getReading(){
     // fxc: 실제 이미지 + 이름 + 배지
     const fxcImgUrl=CARD_IMGS[c.name];
     const fxcImgWrap=document.createElement('div');
-    fxcImgWrap.style.cssText='width:100%;height:48px;overflow:hidden;border-radius:4px 4px 0 0;position:relative;';
+    fxcImgWrap.style.cssText='width:100%;height:130px;overflow:hidden;border-radius:4px 4px 0 0;position:relative;';
     if(fxcImgUrl){
       const fxcImg=document.createElement('img');
       fxcImg.src=fxcImgUrl;
@@ -1478,7 +2396,7 @@ async function getReading(){
   const msgs=['마음의 거울을 들여다보는 중...','우주의 신호를 해독하는 중...','두 사람의 실타래를 엮는 중...','당신의 우연을 운명으로 바꾸는 중...','별자리가 정렬되고 있습니다...','연의 타로가 답을 전달합니다...'];
   let mi=0;const li=setInterval(()=>{mi=(mi+1)%msgs.length;document.getElementById('load-msg').textContent=msgs[mi];},1500);
   try{
-    const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:1000,system:'당신은 연애 타로 리더입니다. 항상 올바른 JSON 형식으로만 응답하세요. 마크다운, 코드블록, 추가 텍스트 없이 JSON 객체만 출력하세요.',messages:[{role:'user',content:buildPrompt()}]})});
+    const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:6000,system:'당신은 연애 타로 리더입니다. 항상 올바른 JSON 형식으로만 응답하세요. 마크다운, 코드블록, 추가 텍스트 없이 JSON 객체만 출력하세요.',messages:[{role:'user',content:buildPrompt()}]})});
     clearInterval(li);
     if(!res.ok){console.error('API Error:',res.status);renderFallback();return;}
     const data=await res.json();
@@ -1616,7 +2534,8 @@ function buildPrompt(){
     +'7. '+me+'님, '+them+'님 이름 자연스럽게 사용\n'
     +'8. advice는 오늘/이번 주 할 수 있는 구체적 행동\n'
     +'9. 재회 보장, 집착 강화, 파국 선언 금지\n\n'
-    +'JSON만 출력. 반드시 아래 구조를 완성해서 출력하세요. HTML 태그(<em>, <strong> 등) 절대 사용 금지. 순수 텍스트만.\n'
+    +'JSON만 출력. 반드시 아래 구조를 완성해서 출력하세요. HTML 태그 절대 사용 금지. 순수 텍스트만.\n'
+    +'[길이 필수] overview.answer: 최소 6문장 이상, 질문에 직접 답하고 카드 3장을 연결해서 깊이 있게 서술. sections[].body: 각 5문장 이상, 카드 상징→상황 적용→구체적 조언 순서로.\n'
     +'{"overview":{"title":"...","answer":"..."},"sections":[{"title":"...","body":"..."},{"title":"...","body":"..."},{"title":"...","body":"..."}],"timeline":[{"phase":"지금 ~ 2주","color":"#7B6FD4","text":"..."},{"phase":"1~2개월","color":"#C95C84","text":"..."},{"phase":"그 이후","color":"#C9A96E","text":"..."}],"advice":["...","...","..."]}';
 }
 
@@ -1725,17 +2644,7 @@ function renderResult(p){
   if(selQ&&selQ.followup) selQ.followup.forEach(f=>followupQs.push({text:f}));
   curCat.questions.filter(q=>q.id!==selQ.id).slice(0,Math.max(0,3-followupQs.length)).forEach(q=>followupQs.push({text:q.text}));
   if(followupQs.length>0){
-    body.insertAdjacentHTML('beforeend',`
-      <div class="sec-div"><div class="line"></div><span class="lbl">이것도 궁금하지 않으신가요?</span><div class="line"></div></div>
-      <div class="followup-block">
-        <div class="followup-title">✦ 추천 다음 질문</div>
-        <div class="followup-list">
-          ${followupQs.map(fq=>`
-            <div class="followup-item" onclick="startFollowup(this.dataset.q)" data-q="${fq.text.replace(/"/g,'&quot;')}">
-              <div class="ft">${fq.text}</div><div class="fa">›</div>
-            </div>`).join('')}
-        </div>
-      </div>`);
+    
   }
 
   document.getElementById('s7dock').style.display='block';
@@ -1752,6 +2661,276 @@ function renderResult(p){
       });
     },{threshold:.4});
     secs.forEach(s=>obs.observe(s));
+  }
+}
+
+
+// ── 추가 질문 채팅 ──
+let chatCount=0;
+let chatContext={};
+const CHAT_MAX=3;
+
+function onChatInput(){
+  const val=document.getElementById('chat-input').value.trim();
+  const btn=document.getElementById('chat-send');
+  if(btn) btn.disabled=!val||chatCount>=CHAT_MAX;
+}
+
+async function sendChat(){
+  if(chatCount>=CHAT_MAX) return;
+  const input=document.getElementById('chat-input');
+  const msgs=document.getElementById('chat-msgs');
+  const hint=document.getElementById('chat-hint');
+  const val=input.value.trim();
+  if(!val) return;
+
+  chatCount++;
+  input.value='';
+  document.getElementById('chat-send').disabled=true;
+
+  // 사용자 말풍선
+  const userBubble=document.createElement('div');
+  userBubble.className='chat-bubble user';
+  userBubble.textContent=val;
+  msgs.appendChild(userBubble);
+
+  // 로딩 말풍선
+  const loadBubble=document.createElement('div');
+  loadBubble.className='chat-bubble loading';
+  loadBubble.textContent='카드의 목소리에 귀 기울이는 중...';
+  msgs.appendChild(loadBubble);
+  msgs.scrollTop=msgs.scrollHeight;
+
+  // 남은 횟수 업데이트
+  const remain=CHAT_MAX-chatCount;
+  if(remain>0){
+    hint.textContent=`앞으로 ${remain}번 더 물어볼 수 있어요`;
+  } else {
+    hint.textContent='오늘의 리딩이 마무리됐어요 ✦';
+    hint.classList.add('done');
+    document.getElementById('chat-input-wrap').style.opacity='0.4';
+    document.getElementById('chat-input-wrap').style.pointerEvents='none';
+  }
+
+  // 프롬프트 구성
+  const cards=chatContext.cards||[];
+  const cardDesc=cards.map((c,i)=>`카드${i+1}: ${c.name} (${c.isReversed?'역방향':'정방향'})`).join(', ');
+  const prompt=`당신은 연애 타로 리더입니다. 아래 맥락에서 사용자의 추가 질문에 간결하고 따뜻하게 답해주세요.
+
+원래 질문: "${chatContext.question||''}"
+뽑힌 카드: ${cardDesc}
+총평: ${chatContext.overview?chatContext.overview.answer:''}
+
+추가 질문: "${val}"
+
+3~5문장으로 카드 맥락에 맞게 답해주세요. HTML 태그 사용 금지. 순수 텍스트만.`;
+
+  try {
+    const res=await fetch('/api/chat',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:800,
+        system:'당신은 연애 타로 리더입니다. 따뜻하고 구체적인 언어로 말합니다. HTML 태그 사용 금지.',
+        messages:[{role:'user',content:prompt}]
+      })
+    });
+    const data=await res.json();
+    const text=data.content?.filter(b=>b.type==='text').map(b=>b.text).join('')||'죄송해요, 다시 시도해주세요.';
+    loadBubble.className='chat-bubble ai';
+    loadBubble.textContent=text.replace(/<[^>]+>/g,'');
+  } catch(e){
+    loadBubble.className='chat-bubble ai';
+    loadBubble.textContent='잠시 후 다시 시도해주세요.';
+  }
+
+  msgs.scrollTop=msgs.scrollHeight;
+}
+
+// ── 공유하기 ──
+async function shareReading(){
+  const title='연의 타로 — 나의 리딩 결과';
+  const text=`✦ ${selQ?selQ.text:''}
+
+연의 타로에서 오늘의 리딩을 받았어요.
+yeon-tarot.vercel.app`;
+  const url=window.location.href;
+
+  if(navigator.share){
+    try{
+      await navigator.share({title,text,url});
+    } catch(e){}
+  } else {
+    // 클립보드 복사 fallback
+    try{
+      await navigator.clipboard.writeText(text+'\n'+url);
+      const btn=document.querySelector('.share-btn');
+      const orig=btn.innerHTML;
+      btn.innerHTML='<span>✓</span><span>링크가 복사됐어요!</span>';
+      setTimeout(()=>{btn.innerHTML=orig;},2500);
+    } catch(e){
+      alert('링크: '+url);
+    }
+  }
+}
+
+
+// ── 결제 관련 ──
+function openPayment(){
+  // TODO: 실제 결제 연동 시 아래 주석 해제
+  // if(/Mobi|Android|iPhone/i.test(navigator.userAgent)){
+  //   window.location.href = 'https://www.payapp.kr/L/z4ebS4';
+  // } else {
+  //   const popup = window.open('https://www.payapp.kr/L/z4ebS4','payapp','width=480,height=640,top=80,left=200');
+  //   const timer = setInterval(()=>{if(popup&&popup.closed){clearInterval(timer);go('5');}},500);
+  // }
+  showPaymentLoading();
+}
+
+function showPaymentLoading(){
+  const overlay=document.createElement('div');
+  overlay.style.cssText='position:fixed;inset:0;z-index:300;background:rgba(7,4,15,.97);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;animation:fi .3s ease;';
+  overlay.innerHTML=`
+    <div style="font-family:'Cormorant Garamond',serif;font-size:13px;color:rgba(201,169,110,.6);letter-spacing:3px;">✦ 결제 완료</div>
+    <div style="font-family:'Noto Serif KR',serif;font-size:18px;font-weight:200;color:#EDE9F5;letter-spacing:1px;">카드를 준비하는 중...</div>
+    <div style="width:40px;height:1px;background:rgba(175,169,236,.3);margin:8px 0;"></div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:12px;color:rgba(175,169,236,.4);letter-spacing:1px;">잠시만 기다려주세요</div>
+  `;
+  document.body.appendChild(overlay);
+  setTimeout(()=>{
+    // go('5') 먼저 호출 후 오버레이 제거 (셔플창 노출 방지)
+    go('5');
+    setTimeout(()=>{
+      overlay.style.transition='opacity .4s';
+      overlay.style.opacity='0';
+      setTimeout(()=>overlay.remove(),400);
+    },100);
+  },1600);
+}
+
+// 모바일: 결제 완료 후 복귀 처리
+window.addEventListener('DOMContentLoaded', ()=>{
+  // 랜딩 고정 CTA 초기 표시
+  const fixedCta=document.getElementById('landing-fixed-cta');
+  if(fixedCta) fixedCta.classList.add('show');
+  if(location.search.includes('paid=1')){
+    history.replaceState({},'',location.pathname);
+    showPaymentLoading();
+  }
+});
+
+
+// ── S5 스프레드 ──
+function goSpread(){
+  go('5');
+  buildSpread();
+}
+
+function buildSpread(){
+  const area = document.getElementById('spread-area');
+  if(!area) return;
+  area.innerHTML = '';
+
+  const total = 24;
+  const W = window.innerWidth;
+  const areaW = Math.min(W, 420);
+
+  // U자 형태: 부채꼴 반원
+  // 중심점: 화면 아래쪽 밖 (아래에서 펼쳐지는 느낌)
+  const cx = areaW / 2;
+  const cy = 420; // 중심이 아래쪽
+  const radius = 300;
+  const startAngle = -160; // 왼쪽 끝
+  const endAngle = -20;   // 오른쪽 끝
+
+  for(let i=0; i<total; i++){
+    const angle = startAngle + (endAngle - startAngle) * (i / (total-1));
+    const rad = angle * Math.PI / 180;
+    const x = cx + radius * Math.cos(rad);
+    const y = cy + radius * Math.sin(rad);
+
+    const card = document.createElement('div');
+    card.className = 'spread-card';
+    card.style.cssText = `
+      left:${x-19}px;
+      top:${y-63}px;
+      z-index:${i};
+      --tf-from:rotate(${angle+90}deg) translateY(80px);
+      --tf-to:rotate(${angle+90}deg);
+      animation:spreadOut ${0.4 + i*0.025}s cubic-bezier(.4,0,.2,1) ${i*0.03}s both;
+    `;
+
+    const back = makeBackSVG();
+    back.style.cssText = 'width:100%;height:100%;';
+    card.appendChild(back);
+    area.appendChild(card);
+  }
+}
+
+
+// ── 인플레이스 스프레드 ──
+function doSpreadInPlace(){
+  const deckStack = document.getElementById('deckStack');
+  const area = document.getElementById('spread-area-s4');
+  const shReady = document.getElementById('sh-ready');
+  const shPay = document.getElementById('sh-pay');
+  const shCnt = document.getElementById('sh-cnt');
+  if(!area) return;
+
+  // 덱 숨기고 스프레드 영역 표시
+  deckStack.style.transition='opacity .3s, transform .3s';
+  deckStack.style.opacity='0';
+  deckStack.style.transform='scale(0.8) translateY(-10px)';
+  shReady.style.display='none';
+  shCnt.style.opacity='0';
+
+  setTimeout(()=>{
+    deckStack.style.display='none';
+    area.style.display='block';
+    buildSpreadInPlace(area);
+
+    // 결제 버튼 등장
+    setTimeout(()=>{
+      shPay.style.display='flex';
+      shPay.style.animation='fi .5s ease';
+    }, 800);
+  }, 350);
+}
+
+function buildSpreadInPlace(area){
+  area.innerHTML='';
+  const total=24;
+  const areaW=area.offsetWidth || window.innerWidth;
+  const cx=areaW/2;
+  const cy=area.offsetHeight+60; // 중심이 아래 밖
+  const radius=260;
+  const startAngle=-165;
+  const endAngle=-15;
+
+  for(let i=0;i<total;i++){
+    const t=i/(total-1);
+    const angle=startAngle+(endAngle-startAngle)*t;
+    const rad=angle*Math.PI/180;
+    const x=cx+radius*Math.cos(rad);
+    const y=cy+radius*Math.sin(rad);
+    const rot=angle+90; // 카드가 중심 향하도록
+
+    const card=document.createElement('div');
+    card.className='sp-card';
+    card.style.cssText=`
+      left:${x-17}px;
+      top:${y-56}px;
+      z-index:${i};
+      --sp-from:rotate(${rot}deg) translateY(60px) scale(0.7);
+      --sp-to:rotate(${rot}deg);
+      animation:spreadFan ${0.35+i*0.02}s cubic-bezier(.4,0,.2,1) ${i*0.025}s both;
+    `;
+
+    const back=makeBackSVG();
+    back.style.cssText='width:100%;height:100%;';
+    card.appendChild(back);
+    area.appendChild(card);
   }
 }
 
@@ -1827,6 +3006,43 @@ function restart(){
   if(nm2R)nm2R.value='';
   go('1');
 }
+
+// ── 후기 캐로셀 ──
+(function(){
+  let cur=0;
+  const total=5;
+  let autoTimer;
+
+  function goTo(n){
+    cur=(n+total)%total;
+    const track=document.getElementById('reviewTrack');
+    if(track) track.style.transform='translateX(-'+cur*100+'%)';
+    document.querySelectorAll('.rdot').forEach((d,i)=>d.classList.toggle('on',i===cur));
+  }
+
+  function startAuto(){
+    autoTimer=setInterval(()=>goTo(cur+1), 3500);
+  }
+
+  // 점 클릭
+  document.querySelectorAll('.rdot').forEach((d,i)=>{
+    d.addEventListener('click',()=>{clearInterval(autoTimer);goTo(i);startAuto();});
+  });
+
+  // 터치 스와이프
+  const carousel=document.getElementById('reviewCarousel');
+  if(carousel){
+    let sx=0;
+    carousel.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;},{ passive:true});
+    carousel.addEventListener('touchend',e=>{
+      const dx=e.changedTouches[0].clientX-sx;
+      if(Math.abs(dx)>40){clearInterval(autoTimer);goTo(cur+(dx<0?1:-1));startAuto();}
+    },{ passive:true});
+  }
+
+  startAuto();
+})();
+
 </script>
 </body>
 </html>
