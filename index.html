@@ -1258,7 +1258,7 @@ strong.cn{color:rgba(201,169,110,.78);font-weight:400;}
     <div class="sh-cnt" id="sh-cnt"></div>
     <button class="sh-ready" id="sh-ready" onclick="openPayment()">✦ &nbsp;2,900원 결제 후 카드 뽑기</button>
     <!-- ⚠️ 테스트용 버튼 — 실서비스 전 삭제 -->
-    <button onclick="showPaymentLoading()" style="margin-top:10px;background:transparent;border:1px dashed rgba(175,169,236,.25);border-radius:3px;padding:10px;color:rgba(175,169,236,.4);font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:2px;cursor:pointer;width:100%;opacity:0;transition:opacity .5s;" id="test-btn" class="sh-ready">(테스트) 결제 없이 진행</button>
+    <button onclick="showPaymentLoading()" style="margin-top:10px;background:transparent;border:1px dashed rgba(175,169,236,.25);border-radius:3px;padding:10px;color:rgba(175,169,236,.4);font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:2px;cursor:pointer;width:100%;opacity:0;pointer-events:none;transition:opacity .5s;" id="test-btn">(테스트) 결제 없이 진행</button>
   </div>
   <div style="padding:0 24px 44px;flex-shrink:0;"><div class="dots"><div class="d"></div><div class="d"></div><div class="d"></div><div class="d on"></div><div class="d"></div></div></div>
 </div>
@@ -1937,7 +1937,7 @@ function onFreeQInput(){
 function buildShuf(){
   shCnt=0;picked=[];finalCards=[];_collecting=false;
   document.getElementById('sh-cnt').textContent='';document.getElementById('sh-ready').classList.add('show');
-  const tb=document.getElementById('test-btn');if(tb)tb.style.opacity='1';
+  const tb=document.getElementById('test-btn');if(tb){tb.style.opacity='1';tb.style.pointerEvents='auto';}
   // 타이틀과 부제목: 상대 유무 + 카테고리에 따라
   const cat=QUESTION_CATS[selCatKey]||{};
   const isFree=cat.isFree||false;
@@ -2005,7 +2005,7 @@ function doShuffle(){
   }
   document.getElementById('sh-cnt').textContent=`✦ ${shCnt}회 셔플  —  ${msg}`;
   document.getElementById('sh-ready').classList.add('show');
-  const tb2=document.getElementById('test-btn');if(tb2)tb2.style.opacity='1';
+  const tb2=document.getElementById('test-btn');if(tb2){tb2.style.opacity='1';tb2.style.pointerEvents='auto';}
   deck24=shuffle(ALL).slice(0,24);
 }
 
