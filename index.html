@@ -2928,7 +2928,7 @@ async function shareReading(){
           await navigator.share({
             files:[file],
             title:'연의 타로 — '+me+'님의 리딩 결과',
-            text:'✦ '+(selQ?selQ.text:'')+'\n\nyeon-tarot.vercel.app',
+            text:'✦ '+(selQ?selQ.text:'')+'\n\nhttps://yeon-tarot.vercel.app',
           });
           btn.innerHTML='<span>✓</span><span>공유됐어요!</span>';
           setTimeout(()=>{btn.innerHTML=orig;btn.disabled=false;},2500);
