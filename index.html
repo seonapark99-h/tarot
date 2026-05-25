@@ -1257,6 +1257,8 @@ strong.cn{color:rgba(201,169,110,.78);font-weight:400;}
     </div>
     <div class="sh-cnt" id="sh-cnt"></div>
     <button class="sh-ready" id="sh-ready" onclick="openPayment()">✦ &nbsp;2,900원 결제 후 카드 뽑기</button>
+    <!-- ⚠️ 테스트용 버튼 — 실서비스 전 삭제 -->
+    <button onclick="showPaymentLoading()" style="margin-top:10px;background:transparent;border:1px dashed rgba(175,169,236,.25);border-radius:3px;padding:10px;color:rgba(175,169,236,.4);font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:2px;cursor:pointer;width:100%;opacity:0;transition:opacity .5s;" id="test-btn" class="sh-ready">(테스트) 결제 없이 진행</button>
   </div>
   <div style="padding:0 24px 44px;flex-shrink:0;"><div class="dots"><div class="d"></div><div class="d"></div><div class="d"></div><div class="d on"></div><div class="d"></div></div></div>
 </div>
@@ -1319,6 +1321,7 @@ strong.cn{color:rgba(201,169,110,.78);font-weight:400;}
 </div>
 
 </div>
+<script src="//lite.payapp.kr/public/api/v2/payapp-lite.js"></script>
 <script>
 // 별
 (()=>{const c=document.getElementById('bg'),ctx=c.getContext('2d');function r(){c.width=window.innerWidth;c.height=window.innerHeight;}r();window.addEventListener('resize',r);const st=Array.from({length:110},()=>({x:Math.random(),y:Math.random(),r:Math.random()*1.2+.2,a:Math.random(),da:(0.002+Math.random()*.005)*(Math.random()>.5?1:-1),mn:.02+Math.random()*.05,mx:.11+Math.random()*.28}));const gls=[{x:.5,y:.2,r:200,c:'rgba(85,65,165,.08)'},{x:.8,y:.75,r:160,c:'rgba(145,50,90,.06)'}];(function draw(){const w=c.width,h=c.height;ctx.clearRect(0,0,w,h);const bg=ctx.createRadialGradient(w*.5,h*.15,0,w*.5,h*.15,w*.9);bg.addColorStop(0,'rgba(15,8,30,1)');bg.addColorStop(1,'rgba(6,4,13,1)');ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);gls.forEach(g=>{const gr=ctx.createRadialGradient(g.x*w,g.y*h,0,g.x*w,g.y*h,g.r);gr.addColorStop(0,g.c);gr.addColorStop(1,'transparent');ctx.fillStyle=gr;ctx.fillRect(0,0,w,h);});st.forEach(s=>{s.a+=s.da;if(s.a>=s.mx){s.a=s.mx;s.da*=-1;}if(s.a<=s.mn){s.a=s.mn;s.da*=-1;}ctx.beginPath();ctx.arc(s.x*w,s.y*h,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(192,187,232,${s.a})`;ctx.fill();});requestAnimationFrame(draw);})();})();
@@ -1934,6 +1937,7 @@ function onFreeQInput(){
 function buildShuf(){
   shCnt=0;picked=[];finalCards=[];_collecting=false;
   document.getElementById('sh-cnt').textContent='';document.getElementById('sh-ready').classList.add('show');
+  const tb=document.getElementById('test-btn');if(tb)tb.style.opacity='1';
   // 타이틀과 부제목: 상대 유무 + 카테고리에 따라
   const cat=QUESTION_CATS[selCatKey]||{};
   const isFree=cat.isFree||false;
@@ -2001,6 +2005,7 @@ function doShuffle(){
   }
   document.getElementById('sh-cnt').textContent=`✦ ${shCnt}회 셔플  —  ${msg}`;
   document.getElementById('sh-ready').classList.add('show');
+  const tb2=document.getElementById('test-btn');if(tb2)tb2.style.opacity='1';
   deck24=shuffle(ALL).slice(0,24);
 }
 
@@ -2928,7 +2933,7 @@ async function shareReading(){
           await navigator.share({
             files:[file],
             title:'연의 타로 — '+me+'님의 리딩 결과',
-            text:'✦ '+(selQ?selQ.text:'')+'\n\nhttps://yeon-tarot.vercel.app',
+            text:'✦ '+(selQ?selQ.text:'')+'\n\nyeon-tarot.vercel.app',
           });
           btn.innerHTML='<span>✓</span><span>공유됐어요!</span>';
           setTimeout(()=>{btn.innerHTML=orig;btn.disabled=false;},2500);
@@ -2976,22 +2981,51 @@ function wrapT(ctx,text,x,y,maxW,lh){
 }
 
 
-// ── 결제 관련 ──
+// ── 결제 관련 (PayApp JS SDK) ──
 function openPayment(){
-  // TODO: 실제 결제 연동 시 아래 주석 해제
-  // if(/Mobi|Android|iPhone/i.test(navigator.userAgent)){
-  //   window.location.href = 'https://www.payapp.kr/L/z4ebS4';
-  // } else {
-  //   const popup = window.open('https://www.payapp.kr/L/z4ebS4','payapp','width=480,height=640,top=80,left=200');
-  //   const timer = setInterval(()=>{if(popup&&popup.closed){clearInterval(timer);go('5');}},500);
-  // }
-  showPaymentLoading();
+  // SDK 로드 확인
+  if(typeof PayApp === 'undefined'){
+    alert('결제 시스템을 불러오지 못했습니다.\n페이지를 새로고침 후 다시 시도해주세요.');
+    return;
+  }
+
+  // 결제 시작 전 상태 저장 (복귀 시 복원 + 우회 차단)
+  try {
+    sessionStorage.setItem('tarotState', JSON.stringify({
+      me, them, selCatKey,
+      selQId  : selQ ? selQ.id   : null,
+      selQText: selQ ? selQ.text : null,
+      ts      : Date.now()
+    }));
+  } catch(e){}
+
+  // postMessage 수신 대기 (PC 팝업 결제 완료 시)
+  window.addEventListener('message', _onPayMsg);
+
+  // PayApp JS SDK로 결제창 호출
+  PayApp.setDefault('userid',   'yeontarot1');
+  PayApp.setDefault('shopname', '리비짓메모리');
+  PayApp.setParam('goodname',     '타로 1회 리딩');
+  PayApp.setParam('price',        '2900');
+  PayApp.setParam('smsuse',       'n');
+  PayApp.setParam('returnurl',    'https://yeon-tarot.vercel.app/?paid=1');
+  PayApp.setParam('skip_cstpage', 'y');
+  PayApp.setParam('redirectpay',  '1');
+  PayApp.payrequest();
+}
+
+// PC: 팝업에서 postMessage 수신 → 즉시 다음 화면
+function _onPayMsg(e){
+  if(e.data && e.data.type === 'payapp_done'){
+    window.removeEventListener('message', _onPayMsg);
+    showPaymentLoading();
+  }
 }
 
 function showPaymentLoading(){
-  const overlay=document.createElement('div');
-  overlay.style.cssText='position:fixed;inset:0;z-index:300;background:rgba(7,4,15,.97);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;animation:fi .3s ease;';
-  overlay.innerHTML=`
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;z-index:300;background:rgba(7,4,15,.97);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;animation:fi .3s ease;';
+  overlay.innerHTML = `
     <div style="font-family:'Cormorant Garamond',serif;font-size:13px;color:rgba(201,169,110,.6);letter-spacing:3px;">✦ 결제 완료</div>
     <div style="font-family:'Noto Serif KR',serif;font-size:18px;font-weight:200;color:#EDE9F5;letter-spacing:1px;">카드를 준비하는 중...</div>
     <div style="width:40px;height:1px;background:rgba(175,169,236,.3);margin:8px 0;"></div>
@@ -2999,25 +3033,58 @@ function showPaymentLoading(){
   `;
   document.body.appendChild(overlay);
   setTimeout(()=>{
-    // go('5') 먼저 호출 후 오버레이 제거 (셔플창 노출 방지)
     go('5');
     setTimeout(()=>{
-      overlay.style.transition='opacity .4s';
-      overlay.style.opacity='0';
-      setTimeout(()=>overlay.remove(),400);
-    },100);
-  },1600);
+      overlay.style.transition = 'opacity .4s';
+      overlay.style.opacity = '0';
+      setTimeout(()=> overlay.remove(), 400);
+    }, 100);
+  }, 1600);
 }
 
-// 모바일: 결제 완료 후 복귀 처리
 window.addEventListener('DOMContentLoaded', ()=>{
-  // 랜딩 고정 CTA 초기 표시
-  const fixedCta=document.getElementById('landing-fixed-cta');
+  const fixedCta = document.getElementById('landing-fixed-cta');
   if(fixedCta) fixedCta.classList.add('show');
-  if(location.search.includes('paid=1')){
-    history.replaceState({},'',location.pathname);
-    showPaymentLoading();
+
+  if(!location.search.includes('paid=1')) return;
+  history.replaceState({}, '', location.pathname);
+
+  // ① PC 팝업 컨텍스트:
+  //    PayApp SDK가 결제 후 팝업 안에 returnurl(?paid=1)을 로드한 경우
+  //    → 부모창에 신호 보내고 팝업 닫기
+  if(window.opener && !window.opener.closed){
+    try {
+      window.opener.postMessage({type: 'payapp_done'}, window.location.origin);
+    } catch(e){
+      window.opener.postMessage({type: 'payapp_done'}, '*');
+    }
+    setTimeout(()=> window.close(), 150);
+    return;
   }
+
+  // ② 모바일 컨텍스트:
+  //    sessionStorage 세션 없으면 URL 직접 입력 우회 → 차단
+  const raw = sessionStorage.getItem('tarotState');
+  if(!raw) return;
+
+  try {
+    const saved = JSON.parse(raw);
+    if(Date.now() - (saved.ts || 0) > 30 * 60 * 1000){
+      sessionStorage.removeItem('tarotState');
+      return;
+    }
+    if(saved.me)        me        = saved.me;
+    if(saved.them)      them      = saved.them;
+    if(saved.selCatKey) selCatKey = saved.selCatKey;
+    if(saved.selQText)  selQ      = {id: saved.selQId || 'saved', text: saved.selQText};
+    sessionStorage.removeItem('tarotState');
+    const nm1 = document.getElementById('nm1');
+    const nm2 = document.getElementById('nm2');
+    if(nm1 && me)   nm1.value = me;
+    if(nm2 && them) nm2.value = them;
+  } catch(e){ return; }
+
+  showPaymentLoading();
 });
 
 
