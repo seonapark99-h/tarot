@@ -1266,7 +1266,7 @@ strong.cn{color:rgba(201,169,110,.78);font-weight:400;}
       <div class="deck-card-wrap" id="dc2"><img src="" alt=""/></div>
     </div>
     <div class="sh-cnt" id="sh-cnt"></div>
-    <button class="sh-ready" id="sh-ready" onclick="openPayment()">✦ &nbsp;2,900원 결제 후 카드 뽑기</button>
+    <button class="sh-ready" id="sh-ready" onclick="openPayment()">✦ &nbsp;1,900원 결제 후 카드 뽑기</button>
     <p style="font-family:'Cormorant Garamond',serif;font-size:10px;color:rgba(175,169,236,.3);letter-spacing:.5px;line-height:1.8;text-align:center;margin-top:10px;padding:0 8px;">
       본 서비스는 결제 즉시 제공되는 디지털 콘텐츠로,<br>서비스 이용 시작 후 청약철회가 제한됩니다. (전자상거래법 제17조)
     </p>
@@ -2585,16 +2585,17 @@ function buildPrompt(){
     +'4. overview.title: 단정형 한 문장 (의문형 금지)\n'
     +'5. 역방향은 반드시 막힘/지연/내면화/미완 의미로 해석\n'
     +'6. "에너지", "파동", "흐름이 느껴진다" 금지\n'
-    +'7. '+me+'님, '+them+'님 이름 자연스럽게 사용\n'
+    +'7. 이름 필수 호명: '+me+'님, '+(them?them+'님':'상대방')+'이라고 문장 2~3개마다 직접 불러줄 것. "질문자님" 표현 절대 금지\n'
     +'8. advice는 오늘/이번 주 할 수 있는 구체적 행동\n'
     +'9. 재회 보장, 집착 강화, 파국 선언 금지\n\n'
     +'JSON만 출력. 반드시 아래 구조를 완성해서 출력하세요. HTML 태그 절대 사용 금지. 순수 텍스트만.\n'
-    +'[길이 필수] overview.answer: 최소 6문장 이상, 질문에 직접 답하고 카드 3장을 연결해서 깊이 있게 서술. sections[].body: 각 5문장 이상, 카드 상징→상황 적용→구체적 조언 순서로.\n'
+    +'[길이 기준] overview.answer: 5문장 이상, 핵심만 날카롭게. sections[].body: 각 4문장 이상, 카드 상징→상황 직접 적용→행동 조언 순서로.\n'
+    +'[톤] 팩폭 허용 — 현실을 직시하게 하는 날카로운 해석 가능. 과도하게 위로만 하지 말 것. 들었을 때 "맞아" 또는 "뼈아프다" 반응이 나와야 함.\n'
     +(hasProbability
-      ? '가능성 퍼센트 필수: sections 해석을 모두 완성한 뒤, 그 해석을 종합해서 "probability":{"score":숫자(0-100),"label":"한줄요약","reason":"위 카드 해석 기반 근거 2문장"} JSON 맨 마지막에 추가.\n'
+      ? '가능성 퍼센트 필수: 카드 조합을 정직하게 반영. 부정 카드 多→15~35, 혼재→38~58, 보통 긍정→62~75, 강한 긍정→80~92. 60~80 기계적 기본값 절대 금지. "probability":{"score":숫자(0-100),"label":"한줄요약","reason":"카드 근거 2문장"} JSON 맨 마지막에 추가.\n'
       : '')
     +(hasProbability
-      ? '{"overview":{"title":"...","answer":"..."},"sections":[{"title":"...","body":"..."},{"title":"...","body":"..."},{"title":"...","body":"..."}],"timeline":[{"phase":"지금 ~ 2주","color":"#7B6FD4","text":"..."},{"phase":"1~2개월","color":"#C95C84","text":"..."},{"phase":"그 이후","color":"#C9A96E","text":"..."}],"advice":["...","...","..."],"probability":{"score":72,"label":"가능성이 열려 있습니다","reason":"앞의 카드 해석을 종합한 근거 2문장"}}'
+      ? '{"overview":{"title":"...","answer":"..."},"sections":[{"title":"...","body":"..."},{"title":"...","body":"..."},{"title":"...","body":"..."}],"timeline":[{"phase":"지금 ~ 2주","color":"#7B6FD4","text":"..."},{"phase":"1~2개월","color":"#C95C84","text":"..."},{"phase":"그 이후","color":"#C9A96E","text":"..."}],"advice":["...","...","..."],"probability":{"score":[카드 기반 정직한 숫자],"label":"해석 기반 한줄요약","reason":"카드 근거 2문장"}}'
       : '{"overview":{"title":"...","answer":"..."},"sections":[{"title":"...","body":"..."},{"title":"...","body":"..."},{"title":"...","body":"..."}],"timeline":[{"phase":"지금 ~ 2주","color":"#7B6FD4","text":"..."},{"phase":"1~2개월","color":"#C95C84","text":"..."},{"phase":"그 이후","color":"#C9A96E","text":"..."}],"advice":["...","...","..."]}');
 }
 
@@ -3046,7 +3047,7 @@ function openPayment(){
   PayApp.setDefault('userid',   'yeontarot1');
   PayApp.setDefault('shopname', '리비짓메모리');
   PayApp.setParam('goodname',    '타로 1회 리딩');
-  PayApp.setParam('price',       '2900');
+  PayApp.setParam('price',       '1900');
   PayApp.setParam('smsuse',      'n');
   PayApp.setParam('returnurl',   'https://yeon-tarot.vercel.app/?paid=1');
   PayApp.setParam('feedbackurl', 'https://yeon-tarot.vercel.app/api/payment-notify');
