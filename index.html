@@ -3091,7 +3091,7 @@ function showPaymentLoading(){
   `;
   document.body.appendChild(overlay);
   setTimeout(()=>{
-    go('5');
+    goSpread();
     setTimeout(()=>{
       overlay.style.transition = 'opacity .4s';
       overlay.style.opacity = '0';
