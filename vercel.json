@@ -1,23 +1,15 @@
 {
   "version": 2,
   "builds": [
-    {
-      "src": "api/chat.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "index.html",
-      "use": "@vercel/static"
-    }
+    { "src": "api/chat.js", "use": "@vercel/node" },
+    { "src": "api/payment-notify.js", "use": "@vercel/node" },
+    { "src": "api/payment-check.js", "use": "@vercel/node" },
+    { "src": "index.html", "use": "@vercel/static" }
   ],
   "routes": [
-    {
-      "src": "/api/chat",
-      "dest": "/api/chat.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
+    { "src": "/api/chat", "dest": "/api/chat.js" },
+    { "src": "/api/payment-notify", "dest": "/api/payment-notify.js" },
+    { "src": "/api/payment-check", "dest": "/api/payment-check.js" },
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
