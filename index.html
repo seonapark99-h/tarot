@@ -1267,8 +1267,6 @@ strong.cn{color:rgba(201,169,110,.78);font-weight:400;}
     </div>
     <div class="sh-cnt" id="sh-cnt"></div>
     <button class="sh-ready" id="sh-ready" onclick="openPayment()">✦ &nbsp;2,900원 결제 후 카드 뽑기</button>
-    <!-- ⚠️ 테스트용 버튼 — 실서비스 전 삭제 -->
-    <button onclick="showPaymentLoading()" style="margin-top:10px;background:transparent;border:1px dashed rgba(175,169,236,.25);border-radius:3px;padding:10px;color:rgba(175,169,236,.4);font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:2px;cursor:pointer;width:100%;opacity:0;pointer-events:none;transition:opacity .5s;" id="test-btn">(테스트) 결제 없이 진행</button>
     <p style="font-family:'Cormorant Garamond',serif;font-size:10px;color:rgba(175,169,236,.3);letter-spacing:.5px;line-height:1.8;text-align:center;margin-top:10px;padding:0 8px;">
       본 서비스는 결제 즉시 제공되는 디지털 콘텐츠로,<br>서비스 이용 시작 후 청약철회가 제한됩니다. (전자상거래법 제17조)
     </p>
@@ -1950,7 +1948,6 @@ function onFreeQInput(){
 function buildShuf(){
   shCnt=0;picked=[];finalCards=[];_collecting=false;
   document.getElementById('sh-cnt').textContent='';document.getElementById('sh-ready').classList.add('show');
-  const tb=document.getElementById('test-btn');if(tb){tb.style.opacity='1';tb.style.pointerEvents='auto';}
   // 타이틀과 부제목: 상대 유무 + 카테고리에 따라
   const cat=QUESTION_CATS[selCatKey]||{};
   const isFree=cat.isFree||false;
@@ -2018,7 +2015,6 @@ function doShuffle(){
   }
   document.getElementById('sh-cnt').textContent=`✦ ${shCnt}회 셔플  —  ${msg}`;
   document.getElementById('sh-ready').classList.add('show');
-  const tb2=document.getElementById('test-btn');if(tb2){tb2.style.opacity='1';tb2.style.pointerEvents='auto';}
   deck24=shuffle(ALL).slice(0,24);
 }
 
@@ -2751,6 +2747,10 @@ function renderResult(p){lastParsed=p;
         <span>✦</span>
         <span>결과 저장 · 공유하기</span>
       </button>
+      <a href="https://forms.gle/ey38KzeGk2JsB9zb9" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:10px;padding:14px;background:transparent;border:1px solid rgba(175,169,236,.2);border-radius:3px;color:rgba(175,169,236,.5);font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:2px;text-decoration:none;transition:all .3s;">
+        <span style="font-size:11px;">✦</span>
+        <span>리딩 피드백 남기기</span>
+      </a>
     </div>
   `);
 }
