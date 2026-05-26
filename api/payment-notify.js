@@ -1,41 +1,38 @@
-// PayApp이 결제 완료 후 자동으로 POST 요청을 보내는 엔드포인트
-// PayApp 관리자 > 설정 > 연동VALUE 를 PAYAPP_LINKVAL 환경변수에 설정해야 합니다
-
+// PayApp feedbackurl - 어떤 경우에도 반드시 SUCCESS 반환
 module.exports = async function handler(req, res) {
-  // PayApp은 POST로 전송
-  if (req.method !== 'POST') return res.status(405).end();
+  // PayApp은 항상 SUCCESS 응답을 기대함
+  // 내부 에러가 나도 SUCCESS를 먼저 보내야 결제가 진행됨
 
-  const {
-    pay_state,   // 4 = 결제완료
-    price,       // 결제 금액
-    var1: sessionId, // openPayment()에서 보낸 세션 ID
-    linkval      // PayApp 연동VALUE (위변조 검증용)
-  } = req.body || {};
+  try {
+    const body = req.body || {};
+    const pay_state = body.pay_state;
+    const price     = body.price;
+    const sessionId = body.var1;
+    const linkval   = body.linkval;
 
-  // ① PayApp 연동VALUE 검증 (위변조 방지)
-  if (process.env.PAYAPP_LINKVAL && linkval !== process.env.PAYAPP_LINKVAL) {
-    console.warn('PayApp linkval mismatch');
-    return res.send('SUCCESS'); // PayApp 재시도 방지를 위해 SUCCESS 응답
-  }
-
-  // ② 결제 완료 + 금액 일치 확인
-  if (pay_state === '4' && parseInt(price) === 2900 && sessionId) {
-    try {
-      // Vercel KV에 "결제 완료" 저장 (5분 유효)
-      await fetch(
-        `${process.env.KV_REST_API_URL}/set/pay_${sessionId}/1/ex/300`,
-        {
-          headers: {
-            Authorization: `Bearer ${process.env.KV_REST_API_TOKEN}`
-          }
-        }
-      );
-      console.log('Payment verified, sessionId:', sessionId);
-    } catch (e) {
-      console.error('KV set error:', e);
+    // 연동VALUE 검증 (설정된 경우에만)
+    if (process.env.PAYAPP_LINKVAL && linkval !== process.env.PAYAPP_LINKVAL) {
+      console.warn('linkval mismatch');
+      return res.status(200).send('SUCCESS');
     }
+
+    // 결제 완료(pay_state=4) + 금액 일치 → KV 저장
+    if (pay_state === '4' && parseInt(price) === 2900 && sessionId) {
+      const kvUrl   = process.env.KV_REST_API_URL;
+      const kvToken = process.env.KV_REST_API_TOKEN;
+
+      if (kvUrl && kvToken) {
+        await fetch(`${kvUrl}/set/pay_${sessionId}/1/ex/300`, {
+          headers: { Authorization: `Bearer ${kvToken}` }
+        });
+        console.log('결제 완료 확인:', sessionId);
+      }
+    }
+
+  } catch (e) {
+    // 에러가 나도 SUCCESS는 반드시 반환
+    console.error('payment-notify error:', e);
   }
 
-  // PayApp에 반드시 SUCCESS 응답 (안 하면 PayApp이 재시도)
-  res.send('SUCCESS');
+  return res.status(200).send('SUCCESS');
 };
