@@ -17,7 +17,7 @@ module.exports = async function handler(req, res) {
     }
 
     // 결제 완료(pay_state=4) + 금액 일치 → KV 저장
-    if (pay_state === '4' && parseInt(price) === 2900 && sessionId) {
+    if (pay_state === '4' && parseInt(price) === 1900 && sessionId) {
       const kvUrl   = process.env.KV_REST_API_URL;
       const kvToken = process.env.KV_REST_API_TOKEN;
 
