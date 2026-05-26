@@ -2984,6 +2984,7 @@ function wrapT(ctx,text,x,y,maxW,lh){
 
 // ── 결제 관련 (PayApp JS SDK + Vercel KV 서버 검증) ──
 let _pollTimer = null;
+let _paymentDone = false; // 중복 처리 방지
 
 function openPayment(){
   if(typeof PayApp === 'undefined'){
@@ -2991,22 +2992,24 @@ function openPayment(){
     return;
   }
 
-  // 세션 ID 생성 (PayApp var1로 전달 → feedbackurl에서 KV 저장 키로 사용)
+  _paymentDone = false;
   const sessionId = Math.random().toString(36).substr(2,9) + Date.now().toString(36);
 
+  // localStorage 사용 (탭 간 공유 가능 — 모바일 새 탭 대응)
   try {
-    sessionStorage.setItem('tarotState', JSON.stringify({
+    localStorage.setItem('tarotState', JSON.stringify({
       me, them, selCatKey,
       selQId  : selQ ? selQ.id   : null,
       selQText: selQ ? selQ.text : null,
       ts      : Date.now()
     }));
-    sessionStorage.setItem('paySession', sessionId);
+    localStorage.setItem('paySession', sessionId);
   } catch(e){}
 
-  // PC: window.open 가로채서 팝업 참조 확보 → 닫히면 "확인 중" 화면 표시
   const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
   if(!isMobile){
+    // PC: 팝업 닫힘 감지
     let payWin = null;
     const origOpen = window.open.bind(window);
     window.open = function(url, name, features){
@@ -3015,15 +3018,15 @@ function openPayment(){
       return win;
     };
     setTimeout(()=>{ window.open = origOpen; }, 800);
-
     const t = setInterval(()=>{
       try {
-        if(payWin && payWin.closed){
-          clearInterval(t);
-          showVerifyingOverlay(sessionId);
-        }
+        if(payWin && payWin.closed){ clearInterval(t); showVerifyingOverlay(sessionId); }
       } catch(e){ clearInterval(t); }
     }, 500);
+  } else {
+    // 모바일: 결제창이 새 탭에서 열릴 수 있으므로
+    // 원래 탭에서 바로 백그라운드 폴링 시작
+    startPaymentPolling(sessionId, null);
   }
 
   // PayApp SDK 결제창 호출
@@ -3040,7 +3043,20 @@ function openPayment(){
   PayApp.payrequest();
 }
 
-// 결제 확인 중 오버레이 + KV 폴링
+function _restoreState(){
+  try {
+    const raw = localStorage.getItem('tarotState');
+    if(!raw) return;
+    const saved = JSON.parse(raw);
+    if(saved.me)        me        = saved.me;
+    if(saved.them)      them      = saved.them;
+    if(saved.selCatKey) selCatKey = saved.selCatKey;
+    if(saved.selQText)  selQ      = {id: saved.selQId||'saved', text: saved.selQText};
+    localStorage.removeItem('tarotState');
+    localStorage.removeItem('paySession');
+  } catch(e){}
+}
+
 function showVerifyingOverlay(sessionId){
   const existing = document.getElementById('pay-verifying');
   if(existing) existing.remove();
@@ -3071,9 +3087,11 @@ function startPaymentPolling(sessionId, overlay){
     try {
       const res  = await fetch(`/api/payment-check?session=${sessionId}`);
       const data = await res.json();
-      if(data.verified){
+      if(data.verified && !_paymentDone){
+        _paymentDone = true;
         clearInterval(_pollTimer);
         if(overlay) overlay.remove();
+        _restoreState();
         showPaymentLoading();
       }
     } catch(e){}
@@ -3114,30 +3132,11 @@ window.addEventListener('DOMContentLoaded', ()=>{
     return;
   }
 
-  // 모바일: sessionStorage 검증 후 KV 폴링
-  const raw       = sessionStorage.getItem('tarotState');
-  const sessionId = sessionStorage.getItem('paySession');
-  if(!raw || !sessionId) return;
+  // 모바일: localStorage에서 sessionId 가져와서 폴링
+  const sessionId = localStorage.getItem('paySession');
+  if(!sessionId) return;
 
-  try {
-    const saved = JSON.parse(raw);
-    if(Date.now() - (saved.ts||0) > 30*60*1000){
-      sessionStorage.removeItem('tarotState');
-      sessionStorage.removeItem('paySession');
-      return;
-    }
-    if(saved.me)        me        = saved.me;
-    if(saved.them)      them      = saved.them;
-    if(saved.selCatKey) selCatKey = saved.selCatKey;
-    if(saved.selQText)  selQ      = {id: saved.selQId||'saved', text: saved.selQText};
-    sessionStorage.removeItem('tarotState');
-    sessionStorage.removeItem('paySession');
-    const nm1 = document.getElementById('nm1');
-    const nm2 = document.getElementById('nm2');
-    if(nm1 && me)   nm1.value = me;
-    if(nm2 && them) nm2.value = them;
-  } catch(e){ return; }
-
+  _restoreState();
   showVerifyingOverlay(sessionId);
 });
 
