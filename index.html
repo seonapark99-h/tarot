@@ -2981,15 +2981,19 @@ function wrapT(ctx,text,x,y,maxW,lh){
 }
 
 
-// ── 결제 관련 (PayApp JS SDK) ──
+
+// ── 결제 관련 (PayApp JS SDK + Vercel KV 서버 검증) ──
+let _pollTimer = null;
+
 function openPayment(){
-  // SDK 로드 확인
   if(typeof PayApp === 'undefined'){
-    alert('결제 시스템을 불러오지 못했습니다.\n페이지를 새로고침 후 다시 시도해주세요.');
+    alert('결제 시스템을 불러오지 못했습니다.\n새로고침 후 다시 시도해주세요.');
     return;
   }
 
-  // 결제 시작 전 상태 저장 (복귀 시 복원 + 우회 차단)
+  // 세션 ID 생성 (PayApp var1로 전달 → feedbackurl에서 KV 저장 키로 사용)
+  const sessionId = Math.random().toString(36).substr(2,9) + Date.now().toString(36);
+
   try {
     sessionStorage.setItem('tarotState', JSON.stringify({
       me, them, selCatKey,
@@ -2997,29 +3001,83 @@ function openPayment(){
       selQText: selQ ? selQ.text : null,
       ts      : Date.now()
     }));
+    sessionStorage.setItem('paySession', sessionId);
   } catch(e){}
 
-  // postMessage 수신 대기 (PC 팝업 결제 완료 시)
-  window.addEventListener('message', _onPayMsg);
+  // PC: window.open 가로채서 팝업 참조 확보 → 닫히면 "확인 중" 화면 표시
+  const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  if(!isMobile){
+    let payWin = null;
+    const origOpen = window.open.bind(window);
+    window.open = function(url, name, features){
+      const win = origOpen(url, name, features);
+      payWin = win;
+      return win;
+    };
+    setTimeout(()=>{ window.open = origOpen; }, 800);
 
-  // PayApp JS SDK로 결제창 호출
+    const t = setInterval(()=>{
+      try {
+        if(payWin && payWin.closed){
+          clearInterval(t);
+          showVerifyingOverlay(sessionId);
+        }
+      } catch(e){ clearInterval(t); }
+    }, 500);
+  }
+
+  // PayApp SDK 결제창 호출
   PayApp.setDefault('userid',   'yeontarot1');
   PayApp.setDefault('shopname', '리비짓메모리');
-  PayApp.setParam('goodname',     '타로 1회 리딩');
-  PayApp.setParam('price',        '2900');
-  PayApp.setParam('smsuse',       'n');
-  PayApp.setParam('returnurl',    'https://yeon-tarot.vercel.app/?paid=1');
-  PayApp.setParam('skip_cstpage', 'y');
-  PayApp.setParam('redirectpay',  '1');
+  PayApp.setParam('goodname',    '타로 1회 리딩');
+  PayApp.setParam('price',       '2900');
+  PayApp.setParam('smsuse',      'n');
+  PayApp.setParam('returnurl',   'https://yeon-tarot.vercel.app/?paid=1');
+  PayApp.setParam('feedbackurl', 'https://yeon-tarot.vercel.app/api/payment-notify');
+  PayApp.setParam('checkretry',  'y');
+  PayApp.setParam('var1',        sessionId);
+  PayApp.setParam('redirectpay', '1');
   PayApp.payrequest();
 }
 
-// PC: 팝업에서 postMessage 수신 → 즉시 다음 화면
-function _onPayMsg(e){
-  if(e.data && e.data.type === 'payapp_done'){
-    window.removeEventListener('message', _onPayMsg);
-    showPaymentLoading();
-  }
+// 결제 확인 중 오버레이 + KV 폴링
+function showVerifyingOverlay(sessionId){
+  const existing = document.getElementById('pay-verifying');
+  if(existing) existing.remove();
+
+  const el = document.createElement('div');
+  el.id = 'pay-verifying';
+  el.style.cssText = 'position:fixed;inset:0;z-index:400;background:rgba(7,4,15,.97);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;animation:fi .3s ease;';
+  el.innerHTML = `
+    <div style="width:24px;height:24px;border:1px solid rgba(175,169,236,.15);border-top-color:rgba(201,169,110,.6);border-radius:50%;animation:spin 1.4s linear infinite;margin-bottom:4px;"></div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:13px;color:rgba(201,169,110,.7);letter-spacing:3px;">결제 확인 중</div>
+    <div style="font-family:'Noto Serif KR',serif;font-size:15px;font-weight:200;color:rgba(237,233,245,.8);letter-spacing:1px;">잠시만 기다려주세요...</div>
+  `;
+  document.body.appendChild(el);
+  startPaymentPolling(sessionId, el);
+}
+
+function startPaymentPolling(sessionId, overlay){
+  if(_pollTimer) clearInterval(_pollTimer);
+  let attempts = 0;
+
+  _pollTimer = setInterval(async ()=>{
+    if(++attempts > 150){
+      clearInterval(_pollTimer);
+      if(overlay) overlay.remove();
+      alert('결제 확인 시간이 초과되었습니다.\n결제가 완료됐다면 고객센터로 문의해주세요.');
+      return;
+    }
+    try {
+      const res  = await fetch(`/api/payment-check?session=${sessionId}`);
+      const data = await res.json();
+      if(data.verified){
+        clearInterval(_pollTimer);
+        if(overlay) overlay.remove();
+        showPaymentLoading();
+      }
+    } catch(e){}
+  }, 2000);
 }
 
 function showPaymentLoading(){
@@ -3049,42 +3107,38 @@ window.addEventListener('DOMContentLoaded', ()=>{
   if(!location.search.includes('paid=1')) return;
   history.replaceState({}, '', location.pathname);
 
-  // ① PC 팝업 컨텍스트:
-  //    PayApp SDK가 결제 후 팝업 안에 returnurl(?paid=1)을 로드한 경우
-  //    → 부모창에 신호 보내고 팝업 닫기
+  // PC 팝업 컨텍스트
   if(window.opener && !window.opener.closed){
-    try {
-      window.opener.postMessage({type: 'payapp_done'}, window.location.origin);
-    } catch(e){
-      window.opener.postMessage({type: 'payapp_done'}, '*');
-    }
+    try { window.opener.postMessage({type:'payapp_done'}, window.location.origin); } catch(e){}
     setTimeout(()=> window.close(), 150);
     return;
   }
 
-  // ② 모바일 컨텍스트:
-  //    sessionStorage 세션 없으면 URL 직접 입력 우회 → 차단
-  const raw = sessionStorage.getItem('tarotState');
-  if(!raw) return;
+  // 모바일: sessionStorage 검증 후 KV 폴링
+  const raw       = sessionStorage.getItem('tarotState');
+  const sessionId = sessionStorage.getItem('paySession');
+  if(!raw || !sessionId) return;
 
   try {
     const saved = JSON.parse(raw);
-    if(Date.now() - (saved.ts || 0) > 30 * 60 * 1000){
+    if(Date.now() - (saved.ts||0) > 30*60*1000){
       sessionStorage.removeItem('tarotState');
+      sessionStorage.removeItem('paySession');
       return;
     }
     if(saved.me)        me        = saved.me;
     if(saved.them)      them      = saved.them;
     if(saved.selCatKey) selCatKey = saved.selCatKey;
-    if(saved.selQText)  selQ      = {id: saved.selQId || 'saved', text: saved.selQText};
+    if(saved.selQText)  selQ      = {id: saved.selQId||'saved', text: saved.selQText};
     sessionStorage.removeItem('tarotState');
+    sessionStorage.removeItem('paySession');
     const nm1 = document.getElementById('nm1');
     const nm2 = document.getElementById('nm2');
     if(nm1 && me)   nm1.value = me;
     if(nm2 && them) nm2.value = them;
   } catch(e){ return; }
 
-  showPaymentLoading();
+  showVerifyingOverlay(sessionId);
 });
 
 
